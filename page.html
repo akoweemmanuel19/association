@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code - Enfant & Parents</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+</style>
+
+</head>
+<body class="min-h-screen flex items-center justify-center backdrop-blur">
+
+  <div class="bg-white/90 backdrop-blur-lg shadow-2xl rounded-2xl p-10 w-full max-w-5xl">
+    <h1 class="text-3xl font-bold text-center text-blue-700 mb-8">QR Code - Infos Enfant & Parents</h1>
+
+    <form id="childForm" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Infos Enfant -->
+      <div class="col-span-1 md:col-span-1">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Enfant</h2>
+        <input type="text" id="id" placeholder="ID Enfant" required class="w-full p-3 border rounded mb-3" />
+        <input type="text" id="nom" placeholder="Nom" required class="w-full p-3 border rounded mb-3" />
+        <input type="text" id="prenom" placeholder="Prénom" required class="w-full p-3 border rounded mb-3" />
+        <input type="date" id="naissance" required class="w-full p-3 border rounded" />
+      </div>
+
+      <!-- Père -->
+      <div>
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Père</h2>
+        <input type="text" id="pereNom" placeholder="Nom du père" required class="w-full p-3 border rounded mb-3" />
+        <input type="text" id="pereTel" placeholder="Téléphone du père" required class="w-full p-3 border rounded mb-3" />
+        <input type="email" id="pereEmail" placeholder="Email du père" class="w-full p-3 border rounded mb-3" />
+        <input type="text" id="pereAdresse" placeholder="Adresse du père" class="w-full p-3 border rounded" />
+      </div>
+
+      <!-- Mère -->
+      <div>
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Mère</h2>
+        <input type="text" id="mereNom" placeholder="Nom de la mère" required class="w-full p-3 border rounded mb-3" />
+        <input type="text" id="mereTel" placeholder="Téléphone de la mère" required class="w-full p-3 border rounded mb-3" />
+        <input type="email" id="mereEmail" placeholder="Email de la mère" class="w-full p-3 border rounded mb-3" />
+        <input type="text" id="mereAdresse" placeholder="Adresse de la mère" class="w-full p-3 border rounded" />
+      </div>
+
+      <div class="col-span-1 md:col-span-3 mt-6">
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 text-lg rounded hover:bg-blue-700 transition duration-200">
+          Générer le QR Code
+        </button>
+      </div>
+    </form>
+
+    <div id="qr-section" class="mt-8 text-center hidden">
+      <canvas id="qr-canvas" class="mx-auto mb-4"></canvas>
+      <div class="flex justify-center gap-4">
+        <button onclick="downloadQR()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Télécharger</button>
+        <button onclick="window.print()" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Imprimer</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("childForm");
+    const qrCanvas = document.getElementById("qr-canvas");
+    const qrSection = document.getElementById("qr-section");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const data = {
+        enfant: {
+          id: document.getElementById("id").value.trim(),
+          nom: document.getElementById("nom").value.trim(),
+          prenom: document.getElementById("prenom").value.trim(),
+          naissance: document.getElementById("naissance").value
+        },
+        pere: {
+          nom: document.getElementById("pereNom").value.trim(),
+          telephone: document.getElementById("pereTel").value.trim(),
+          email: document.getElementById("pereEmail").value.trim(),
+          adresse: document.getElementById("pereAdresse").value.trim()
+        },
+        mere: {
+          nom: document.getElementById("mereNom").value.trim(),
+          telephone: document.getElementById("mereTel").value.trim(),
+          email: document.getElementById("mereEmail").value.trim(),
+          adresse: document.getElementById("mereAdresse").value.trim()
+        }
+      };
+
+      const jsonString = JSON.stringify(data, null, 2);
+      qrCanvas.innerHTML = "";
+      QRCode.toCanvas(qrCanvas, jsonString, function (error) {
+        if (error) console.error(error);
+        else qrSection.classList.remove("hidden");
+      });
+    });
+
+    function downloadQR() {
+      const link = document.createElement('a');
+      link.download = 'qr-code.png';
+      link.href = qrCanvas.toDataURL("image/png");
+      link.click();
+    }
+  </script>
+
+</body>
+</html>
