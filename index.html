@@ -1,114 +1,396 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QR Code - Enfant & Parents</title>
+  <title>QR Code - Athlète</title>
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-<style>
-  body {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-  }
-</style>
-
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      min-height: 100vh;
+    }
+    
+    .card-shadow {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+    
+    .form-input {
+      transition: all 0.2s ease;
+      border: 1.5px solid #e2e8f0;
+      background: #ffffff;
+    }
+    
+    .form-input:focus {
+      border-color: #64748b;
+      box-shadow: 0 0 0 3px rgba(100, 116, 139, 0.08);
+      outline: none;
+    }
+    
+    .form-input:hover {
+      border-color: #cbd5e1;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+      transition: all 0.2s ease;
+    }
+    
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #475569 0%, #334155 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(100, 116, 139, 0.25);
+    }
+    
+    .btn-secondary {
+      transition: all 0.2s ease;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    
+    .header-accent {
+      background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+      margin: 1.5rem 0;
+    }
+    
+    .logo-circle {
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      border: 2px solid #f8fafc;
+    }
+    
+    .qr-container {
+      background: #ffffff;
+      border: 1px solid #f1f5f9;
+    }
+    
+    .fade-in {
+      animation: fadeInUp 0.4s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .status-badge {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #d1fae5;
+    }
+  </style>
 </head>
-<body class="min-h-screen flex items-center justify-center backdrop-blur">
 
-  <div class="bg-white/90 backdrop-blur-lg shadow-2xl rounded-2xl p-10 w-full max-w-5xl">
-    <h1 class="text-3xl font-bold text-center text-blue-700 mb-8">QR Code - Infos Enfant & Parents</h1>
+<body class="min-h-screen flex items-center justify-center p-4 bg-gray-50">
 
-    <form id="childForm" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Infos Enfant -->
-      <div class="col-span-1 md:col-span-1">
-        <h2 class="text-xl font-semibold text-gray-700 mb-2">Enfant</h2>
-        <input type="text" id="id" placeholder="ID Enfant" required class="w-full p-3 border rounded mb-3" />
-        <input type="text" id="nom" placeholder="Nom" required class="w-full p-3 border rounded mb-3" />
-        <input type="text" id="prenom" placeholder="Prénom" required class="w-full p-3 border rounded mb-3" />
-        <input type="date" id="naissance" required class="w-full p-3 border rounded" />
+  <div class="bg-white card-shadow rounded-2xl p-8 lg:p-12 w-full max-w-4xl">
+    
+    <!-- Header Section -->
+    <div class="text-center mb-10">
+      <div class="logo-circle w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
+        <img src="logo.PNG" alt="Logo AS FINANCES" class="w-20 h-20">
+      </div>
+      
+      <h1 class="text-3xl lg:text-4xl font-semibold header-accent mb-3">
+        Générateur de QR Code
+      </h1>
+      
+      <p class="text-slate-600 text-lg font-medium mb-2">AS FINANCES</p>
+      <p class="text-slate-500 text-sm">Section Athlétisme U15</p>
+      
+      <div class="divider"></div>
+    </div>
+
+    <!-- Form Section -->
+    <form id="athleteForm" class="space-y-8">
+      
+      <!-- Informations personnelles -->
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
+          <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          <span>Informations de l'athlète</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label for="id" class="block text-sm font-medium text-slate-700">Identifiant athlète</label>
+            <input type="text" id="id" placeholder="Ex: ATH2024001" required 
+                   class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+          </div>
+
+          <div class="space-y-2">
+            <label for="nom" class="block text-sm font-medium text-slate-700">Nom de famille</label>
+            <input type="text" id="nom" placeholder="Nom de l'athlète" required 
+                   class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+          </div>
+
+          <div class="space-y-2">
+            <label for="prenom" class="block text-sm font-medium text-slate-700">Prénom</label>
+            <input type="text" id="prenom" placeholder="Prénom de l'athlète" required 
+                   class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+          </div>
+
+          <div class="space-y-2">
+            <label for="naissance" class="block text-sm font-medium text-slate-700">Date de naissance</label>
+            <input type="date" id="naissance" required 
+                   class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+          </div>
+        </div>
       </div>
 
-      <!-- Père -->
-      <div>
-        <h2 class="text-xl font-semibold text-gray-700 mb-2">Père</h2>
-        <input type="text" id="pereNom" placeholder="Nom du père" required class="w-full p-3 border rounded mb-3" />
-        <input type="text" id="pereTel" placeholder="Téléphone du père" required class="w-full p-3 border rounded mb-3" />
-        <input type="email" id="pereEmail" placeholder="Email du père" class="w-full p-3 border rounded mb-3" />
-        <input type="text" id="pereAdresse" placeholder="Adresse du père" class="w-full p-3 border rounded" />
+      <!-- Informations géographiques -->
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
+          <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <span>Localisation</span>
+        </h2>
+        
+        <div class="space-y-2">
+          <label for="departement" class="block text-sm font-medium text-slate-700">Département de provenance</label>
+          <select id="departement" required class="form-input w-full px-4 py-3 rounded-lg text-slate-900 bg-white">
+            <option value="">Sélectionnez votre département</option>
+            <option value="Alibori">Alibori</option>
+            <option value="Atacora">Atacora</option>
+            <option value="Atlantique">Atlantique</option>
+            <option value="Borgou">Borgou</option>
+            <option value="Collines">Collines</option>
+            <option value="Donga">Donga</option>
+            <option value="Kouffo">Kouffo</option>
+            <option value="Littoral">Littoral</option>
+            <option value="Mono">Mono</option>
+            <option value="Ouémé">Ouémé</option>
+            <option value="Plateau">Plateau</option>
+            <option value="Zou">Zou</option>
+          </select>
+        </div>
       </div>
 
-      <!-- Mère -->
-      <div>
-        <h2 class="text-xl font-semibold text-gray-700 mb-2">Mère</h2>
-        <input type="text" id="mereNom" placeholder="Nom de la mère" required class="w-full p-3 border rounded mb-3" />
-        <input type="text" id="mereTel" placeholder="Téléphone de la mère" required class="w-full p-3 border rounded mb-3" />
-        <input type="email" id="mereEmail" placeholder="Email de la mère" class="w-full p-3 border rounded mb-3" />
-        <input type="text" id="mereAdresse" placeholder="Adresse de la mère" class="w-full p-3 border rounded" />
-      </div>
-
-      <div class="col-span-1 md:col-span-3 mt-6">
-        <button type="submit" class="w-full bg-blue-600 text-white py-3 text-lg rounded hover:bg-blue-700 transition duration-200">
-          Générer le QR Code
+      <!-- Submit Button -->
+      <div class="pt-6">
+        <button type="submit" class="btn-primary w-full text-white py-4 text-base font-medium rounded-lg">
+          <span class="flex items-center justify-center space-x-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+            <span>Générer le code QR</span>
+          </span>
         </button>
       </div>
     </form>
 
-    <div id="qr-section" class="mt-8 text-center hidden">
-      <canvas id="qr-canvas" class="mx-auto mb-4"></canvas>
-      <div class="flex justify-center gap-4">
-        <button onclick="downloadQR()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Télécharger</button>
-        <button onclick="window.print()" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Imprimer</button>
+    <!-- QR Code Section -->
+    <div id="qr-section" class="mt-12 hidden fade-in">
+      <div class="divider"></div>
+      
+      <div class="text-center space-y-6">
+        <div class="flex items-center justify-center space-x-2">
+          <div class="status-badge px-3 py-1 rounded-full text-xs font-medium">
+            ✓ QR Code généré avec succès
+          </div>
+        </div>
+        
+        <h2 class="text-2xl font-semibold text-slate-800">Code QR généré</h2>
+        
+        <div class="qr-container p-8 rounded-xl inline-block shadow-sm">
+          <canvas id="qr-canvas" class="mx-auto block"></canvas>
+          <div class="mt-4 text-center">
+            <p class="text-sm text-slate-500 mb-1">Scannez ce code pour accéder aux informations</p>
+            <p class="text-xs text-slate-400" id="qr-timestamp"></p>
+          </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row justify-center gap-3 pt-4">
+          <button onclick="downloadQR()" 
+                  class="btn-secondary bg-white hover:bg-gray-50 text-slate-700 border px-6 py-3 rounded-lg font-medium flex items-center justify-center space-x-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <span>Télécharger PNG</span>
+          </button>
+          
+          <button onclick="window.print()" 
+                  class="btn-secondary bg-white hover:bg-gray-50 text-slate-700 border px-6 py-3 rounded-lg font-medium flex items-center justify-center space-x-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+            </svg>
+            <span>Imprimer</span>
+          </button>
+          
+          <button onclick="resetForm()" 
+                  class="btn-secondary bg-slate-100 hover:bg-slate-200 text-slate-700 px-6 py-3 rounded-lg font-medium flex items-center justify-center space-x-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            <span>Nouveau code</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    const form = document.getElementById("childForm");
+    const form = document.getElementById("athleteForm");
     const qrCanvas = document.getElementById("qr-canvas");
     const qrSection = document.getElementById("qr-section");
+    const timestampElement = document.getElementById("qr-timestamp");
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
 
+      // Validation des champs
+      const requiredFields = ['id', 'nom', 'prenom', 'naissance', 'departement'];
+      let isValid = true;
+      let firstInvalidField = null;
+
+      requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        const fieldContainer = field.parentElement;
+        
+        if (!field.value.trim()) {
+          field.classList.add('border-red-300', 'bg-red-50');
+          field.classList.remove('border-slate-200');
+          if (!firstInvalidField) firstInvalidField = field;
+          isValid = false;
+        } else {
+          field.classList.remove('border-red-300', 'bg-red-50');
+          field.classList.add('border-slate-200');
+        }
+      });
+
+      if (!isValid) {
+        firstInvalidField.focus();
+        return;
+      }
+
+      const now = new Date();
       const data = {
-        enfant: {
-          id: document.getElementById("id").value.trim(),
-          nom: document.getElementById("nom").value.trim(),
+        athlete: {
+          id: document.getElementById("id").value.trim().toUpperCase(),
+          nom: document.getElementById("nom").value.trim().toUpperCase(),
           prenom: document.getElementById("prenom").value.trim(),
           naissance: document.getElementById("naissance").value
         },
-        pere: {
-          nom: document.getElementById("pereNom").value.trim(),
-          telephone: document.getElementById("pereTel").value.trim(),
-          email: document.getElementById("pereEmail").value.trim(),
-          adresse: document.getElementById("pereAdresse").value.trim()
+        association: {
+          nom: "AS FINANCES",
+          section: "Athlétisme U15",
+          departement: document.getElementById("departement").value
         },
-        mere: {
-          nom: document.getElementById("mereNom").value.trim(),
-          telephone: document.getElementById("mereTel").value.trim(),
-          email: document.getElementById("mereEmail").value.trim(),
-          adresse: document.getElementById("mereAdresse").value.trim()
+        generated: {
+          timestamp: now.toISOString(),
+          date: now.toLocaleDateString('fr-FR'),
+          time: now.toLocaleTimeString('fr-FR')
         }
       };
 
       const jsonString = JSON.stringify(data, null, 2);
+      
+      // Options QR Code professionnelles
+      const options = {
+        width: 250,
+        height: 250,
+        margin: 3,
+        color: {
+          dark: '#374151',
+          light: '#FFFFFF'
+        },
+        errorCorrectionLevel: 'M'
+      };
+
       qrCanvas.innerHTML = "";
-      QRCode.toCanvas(qrCanvas, jsonString, function (error) {
-        if (error) console.error(error);
-        else qrSection.classList.remove("hidden");
+      QRCode.toCanvas(qrCanvas, jsonString, options, function (error) {
+        if (error) {
+          console.error(error);
+          alert('Erreur lors de la génération du QR Code. Veuillez réessayer.');
+        } else {
+          timestampElement.textContent = `Généré le ${data.generated.date} à ${data.generated.time}`;
+          qrSection.classList.remove("hidden");
+          qrSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
 
     function downloadQR() {
+      const canvas = qrCanvas;
       const link = document.createElement('a');
-      link.download = 'qr-code.png';
-      link.href = qrCanvas.toDataURL("image/png");
+      const athleteData = {
+        nom: document.getElementById("nom").value.trim(),
+        prenom: document.getElementById("prenom").value.trim(),
+        id: document.getElementById("id").value.trim()
+      };
+      
+      const fileName = `QR-${athleteData.nom.replace(/\s+/g, '')}-${athleteData.prenom.replace(/\s+/g, '')}-${athleteData.id}`.toUpperCase();
+      link.download = `${fileName}.png`;
+      link.href = canvas.toDataURL("image/png", 1.0);
       link.click();
     }
+
+    function resetForm() {
+      form.reset();
+      qrSection.classList.add("hidden");
+      
+      // Reset field styles
+      document.querySelectorAll('.form-input').forEach(input => {
+        input.classList.remove('border-red-300', 'bg-red-50');
+        input.classList.add('border-slate-200');
+      });
+      
+      document.getElementById("id").focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Auto-focus et amélioration UX
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById("id").focus();
+    });
+
+    // Format automatique pour l'ID
+    document.getElementById("id").addEventListener('input', function(e) {
+      this.value = this.value.toUpperCase();
+    });
+
+    // Format automatique pour le nom
+    document.getElementById("nom").addEventListener('input', function(e) {
+      this.value = this.value.toUpperCase();
+    });
+
+    // Format automatique pour le prénom
+    document.getElementById("prenom").addEventListener('input', function(e) {
+      const value = this.value;
+      this.value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+    });
   </script>
 
 </body>
+
 </html>
