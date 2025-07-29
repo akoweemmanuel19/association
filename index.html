@@ -286,7 +286,7 @@
             class="btn-secondary bg-white hover:bg-gray-50 text-slate-700 border px-6 py-3 rounded-lg font-medium flex items-center justify-center space-x-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
             </svg>
             <span>Imprimer</span>
           </button>
@@ -313,8 +313,8 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      // Validation des champs
-      const requiredFields = ['id', 'nom', 'prenom', 'naissance', 'departement'];
+      // Validation des champs obligatoires
+      const requiredFields = ['id', 'nom', 'prenom', 'naissance', 'departement', 'nom_pere', 'prenom_pere', 'nom_mere', 'prenom_mere'];
       let isValid = true;
       let firstInvalidField = null;
 
@@ -339,6 +339,8 @@
       }
 
       const now = new Date();
+      
+      // Construction complète des données pour le QR Code
       const data = {
         athlete: {
           id: document.getElementById("id").value.trim().toUpperCase(),
@@ -346,10 +348,22 @@
           prenom: document.getElementById("prenom").value.trim(),
           naissance: document.getElementById("naissance").value
         },
+        localisation: {
+          departement: document.getElementById("departement").value
+        },
+        parents: {
+          pere: {
+            nom: document.getElementById("nom_pere").value.trim().toUpperCase() || null,
+            prenom: document.getElementById("prenom_pere").value.trim() || null
+          },
+          mere: {
+            nom: document.getElementById("nom_mere").value.trim().toUpperCase() || null,
+            prenom: document.getElementById("prenom_mere").value.trim() || null
+          }
+        },
         association: {
           nom: "AS FINANCES",
-          section: "Athlétisme U15",
-          departement: document.getElementById("departement").value
+          section: "Athlétisme U15"
         },
         generated: {
           timestamp: now.toISOString(),
@@ -358,29 +372,43 @@
         }
       };
 
+      // Nettoyage des données vides pour optimiser la taille du QR Code
+      if (!data.parents.pere.nom && !data.parents.pere.prenom) {
+        data.parents.pere = null;
+      }
+      if (!data.parents.mere.nom && !data.parents.mere.prenom) {
+        data.parents.mere = null;
+      }
+      if (!data.parents.pere && !data.parents.mere) {
+        delete data.parents;
+      }
+
       const jsonString = JSON.stringify(data, null, 2);
 
-      // Options QR Code professionnelles
+      // Options QR Code optimisées pour les données complètes
       const options = {
-        width: 250,
-        height: 250,
+        width: 280,
+        height: 280,
         margin: 3,
         color: {
           dark: '#374151',
           light: '#FFFFFF'
         },
-        errorCorrectionLevel: 'M'
+        errorCorrectionLevel: 'M' // Niveau de correction d'erreur moyen
       };
 
       qrCanvas.innerHTML = "";
       QRCode.toCanvas(qrCanvas, jsonString, options, function (error) {
         if (error) {
           console.error(error);
-          alert('Erreur lors de la génération du QR Code. Veuillez réessayer.');
+          alert('Erreur lors de la génération du QR Code. Les données peuvent être trop volumineuses. Veuillez réessayer.');
         } else {
           timestampElement.textContent = `Généré le ${data.generated.date} à ${data.generated.time}`;
           qrSection.classList.remove("hidden");
           qrSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          // Affichage optionnel des données dans la console pour debug
+          console.log("Données encodées dans le QR Code:", data);
         }
       });
     });
@@ -419,18 +447,35 @@
       document.getElementById("id").focus();
     });
 
-    // Format automatique pour l'ID
+    // Formatage automatique des champs
     document.getElementById("id").addEventListener('input', function (e) {
       this.value = this.value.toUpperCase();
     });
 
-    // Format automatique pour le nom
     document.getElementById("nom").addEventListener('input', function (e) {
       this.value = this.value.toUpperCase();
     });
 
-    // Format automatique pour le prénom
     document.getElementById("prenom").addEventListener('input', function (e) {
+      const value = this.value;
+      this.value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+    });
+
+    // Formatage automatique des noms des parents
+    document.getElementById("nom_pere").addEventListener('input', function (e) {
+      this.value = this.value.toUpperCase();
+    });
+
+    document.getElementById("nom_mere").addEventListener('input', function (e) {
+      this.value = this.value.toUpperCase();
+    });
+
+    document.getElementById("prenom_pere").addEventListener('input', function (e) {
+      const value = this.value;
+      this.value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+    });
+
+    document.getElementById("prenom_mere").addEventListener('input', function (e) {
       const value = this.value;
       this.value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
     });
