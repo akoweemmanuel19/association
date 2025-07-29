@@ -112,8 +112,18 @@
         }
 
         @media print {
+
             #formulaire,
             .no-print {
+                display: none !important;
+            }
+
+            #entete,
+            .no-print {
+                display: none !important;
+            }
+
+            #ficheStatus,.no-print {
                 display: none !important;
             }
 
@@ -147,7 +157,7 @@
 
     <div class="bg-white card-shadow rounded-2xl p-8 lg:p-12 w-full max-w-4xl">
         <!-- Header Section -->
-        <div class="text-center mb-10">
+        <div class="text-center mb-10" id="entete">
             <div class="logo-circle w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
                 <img src="logo.PNG" alt="Logo AS FINANCES" class="w-20 h-20">
             </div>
@@ -183,8 +193,10 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label for="naissance" class="block text-sm font-medium text-slate-700">Date de naissance</label>
-                            <input type="date" id="naissance" required class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            <label for="naissance" class="block text-sm font-medium text-slate-700">Date de
+                                naissance</label>
+                            <input type="date" id="naissance" required
+                                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                         </div>
                     </div>
                 </div>
@@ -201,14 +213,17 @@
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="space-y-2">
-                            <label for="carte" class="block text-sm font-medium text-slate-700">Numéro de carte d'identité</label>
+                            <label for="carte" class="block text-sm font-medium text-slate-700">Numéro de carte
+                                d'identité</label>
                             <input type="text" id="carte" placeholder="Ex: 123456789012" required
                                 class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                         </div>
 
                         <div class="space-y-2">
-                            <label for="expiration" class="block text-sm font-medium text-slate-700">Date d'expiration</label>
-                            <input type="date" id="expiration" required class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            <label for="expiration" class="block text-sm font-medium text-slate-700">Date
+                                d'expiration</label>
+                            <input type="date" id="expiration" required
+                                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                         </div>
                     </div>
                 </div>
@@ -218,7 +233,7 @@
                     <button type="submit" class="btn-primary w-full text-white py-4 text-base font-medium rounded-lg">
                         <span class="flex items-center justify-center space-x-3">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                             <span>Générer la fiche d'engagement</span>
@@ -233,7 +248,7 @@
             <div class="divider"></div>
 
             <div class="text-center space-y-6">
-                <div class="flex items-center justify-center space-x-2">
+                <div class="flex items-center justify-center space-x-2" id="ficheStatus">
                     <div class="success-badge px-3 py-1 rounded-full text-xs font-medium">
                         ✓ Fiche d'engagement générée avec succès
                     </div>
@@ -241,7 +256,7 @@
 
                 <h2 class="text-2xl font-semibold text-slate-800">Fiche d'engagement</h2>
 
-                <div class="fiche-container p-8 rounded-xl shadow-sm">
+                <div class="fiche-container p-8">
                     <!-- Header pour impression -->
                     <div class="print-header hidden">
                         <img src="logo.PNG" alt="Logo AS FINANCES" class="print-logo">
@@ -250,7 +265,7 @@
                     </div>
 
                     <div id="ficheText" class="text-slate-800 leading-relaxed text-justify space-y-4"></div>
-                    
+
                     <!-- Signature et date -->
                     <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="text-center">
@@ -382,11 +397,11 @@
         });
 
         // Affichage du header lors de l'impression
-        window.addEventListener('beforeprint', function() {
+        window.addEventListener('beforeprint', function () {
             document.querySelector('.print-header').classList.remove('hidden');
         });
 
-        window.addEventListener('afterprint', function() {
+        window.addEventListener('afterprint', function () {
             document.querySelector('.print-header').classList.add('hidden');
         });
     </script>
