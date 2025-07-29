@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fiche d’engagement - AS Finances</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+
+            #formulaire,
+            .no-print {
+                display: none;
+            }
+
+            #fiche-engagement {
+                display: block;
+            }
+
+            body {
+                background: white;
+            }
+        }
+    </style>
+
+</head>
+
+<body class="min-h-screen bg-gray-100 p-4">
+
+    <!-- Logo -->
+    <div class="flex justify-center mb-6">
+        <img src="logo.png" alt="Logo AS Finances" class="h-24 object-contain">
+    </div>
+
+    <!-- Formulaire -->
+    <div id="formulaire" class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-bold mb-4 text-center text-blue-800">Formulaire d’engagement</h2>
+
+        <form id="engagementForm" class="space-y-4">
+            <input type="text" id="nom" placeholder="Nom et prénoms" required class="w-full p-3 border rounded" />
+
+            <label class="block">
+                Date de naissance :
+                <input type="date" id="naissance" required class="w-full p-3 border rounded" />
+            </label>
+
+            <input type="text" id="carte" placeholder="Numéro de carte d'identité" required
+                class="w-full p-3 border rounded" />
+
+            <label class="block">
+                Expiration de la carte :
+                <input type="date" id="expiration" required class="w-full p-3 border rounded" />
+            </label>
+
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+                Générer la fiche d'engagement
+            </button>
+        </form>
+    </div>
+
+    <!-- Fiche d'engagement générée -->
+    <div id="fiche-engagement" class="max-w-3xl mx-auto mt-8 p-6 bg-white rounded shadow hidden">
+        <h3 class="text-lg font-bold mb-4 text-center text-green-700">Fiche d’engagement</h3>
+        <div id="ficheText" class="whitespace-pre-wrap text-gray-800 leading-relaxed"></div>
+        <button onclick="window.print()"
+            class="no-print mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+            🖨️ Imprimer la fiche d'engagement
+        </button>
+    </div>
+
+    <script>
+        const form = document.getElementById('engagementForm');
+        const ficheContainer = document.getElementById('fiche-engagement');
+        const ficheText = document.getElementById('ficheText');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const nom = document.getElementById('nom').value.trim();
+            const naissance = document.getElementById('naissance').value;
+            const carte = document.getElementById('carte').value.trim();
+            const expiration = document.getElementById('expiration').value;
+
+            const fiche = `Je soussigné, ${nom} né le ${naissance}, numéro carte d’identité ${carte} expirant le ${expiration}, m’engage à entrainer les athlètes de l’Association Sportive des Finances.
+
+À ce titre, je m’engage :
+- à entrainer avec assiduités les athlètes de l’association ;
+- à respecter et faire respecter les textes de l’association ;
+- à ne détourner aucun athlète de l’association à toute fin ;
+- à prendre soin de toute dotation en matériel venant de l’association ;
+- à respecter avec rigueur les consignes venant des dirigeants de l’association.
+
+Le présent, m’engage face aux textes de l’Association Sportive des Finances.`;
+
+            ficheText.textContent = fiche;
+            ficheContainer.classList.remove('hidden');
+            window.scrollTo({ top: ficheContainer.offsetTop, behavior: 'smooth' });
+        });
+    </script>
+</body>
+
+</html>
