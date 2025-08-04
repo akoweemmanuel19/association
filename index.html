@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QR Code - Athlète</title>
+  <title>QR Code - AS FINANCES</title>
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -104,26 +104,52 @@
       color: #065f46;
       border: 1px solid #d1fae5;
     }
+
+    .radio-card {
+      transition: all 0.2s ease;
+      border: 2px solid #e2e8f0;
+    }
+
+    .radio-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+
+    .radio-card.selected {
+      border-color: #64748b;
+      background: #f8fafc;
+    }
+
+    .form-section {
+      transition: all 0.3s ease;
+    }
+
+    .form-section.hidden {
+      opacity: 0;
+      transform: translateY(-20px);
+      height: 0;
+      overflow: hidden;
+    }
   </style>
 </head>
 
 <body class="min-h-screen flex items-center justify-center p-4 bg-gray-50">
 
   <div class="bg-white card-shadow rounded-2xl p-8 lg:p-12 w-full max-w-4xl">
-    <a href="fiche-engagement.html"
-      class="mt-4 inline-block text-white bg-gray-600 hover:bg-blue-700 px-4 py-2 rounded shadow transition">
-      Remplir une fiche d'engagement
-    </a>
-
     <!-- Header Section -->
     <div class="text-center mb-10">
       <div class="logo-circle w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
         <img src="logo.PNG" alt="Logo AS FINANCES" class="w-20 h-20">
       </div>
 
-      <h1 class="text-3xl lg:text-4xl font-semibold header-accent mb-3">
-        Générateur de QR Code
-      </h1>
+      <div class="flex items-center justify-center space-x-4 mb-6">
+        <a href="index.html" class="text-xl text-blue-500 font-semibold mb-3">
+          Générateur de QR Code
+        </a>
+        <a href="fiche-engagement.html" class="text-xl font-semibold header-accent mb-3">
+          Fiche d'engagement
+        </a>
+      </div>
 
       <p class="text-slate-600 text-lg font-medium mb-2">AS FINANCES</p>
       <p class="text-slate-500 text-sm">Section Athlétisme U15</p>
@@ -131,115 +157,204 @@
       <div class="divider"></div>
     </div>
 
+    <!-- Type Selection -->
+    <div class="mb-10">
+      <h2 class="text-lg font-semibold text-slate-700 mb-6 text-center">Sélectionnez le type de profil</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <label class="radio-card p-6 rounded-xl cursor-pointer block" for="type-athlete">
+          <input type="radio" id="type-athlete" name="profile-type" value="athlete" class="sr-only">
+          <div class="text-center">
+            <svg class="w-12 h-12 text-slate-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Athlète</h3>
+            <p class="text-sm text-slate-600">Générer un QR code pour un athlète de la section</p>
+          </div>
+        </label>
+
+        <label class="radio-card p-6 rounded-xl cursor-pointer block" for="type-recruteur">
+          <input type="radio" id="type-recruteur" name="profile-type" value="recruteur" class="sr-only">
+          <div class="text-center">
+            <svg class="w-12 h-12 text-slate-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6" />
+            </svg>
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Recruteur</h3>
+            <p class="text-sm text-slate-600">Générer un QR code pour un recruteur</p>
+          </div>
+        </label>
+      </div>
+    </div>
+
     <!-- Form Section -->
-    <form id="athleteForm" class="space-y-8">
+    <form id="profileForm" class="space-y-8">
 
-      <!-- Informations personnelles -->
-      <div class="space-y-4">
-        <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
-          <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-          <span>Informations de l'athlète</span>
-        </h2>
+      <!-- Formulaire Athlète -->
+      <div id="athlete-form" class="form-section hidden">
+        <!-- Informations personnelles -->
+        <div class="space-y-4">
+          <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
+            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span>Informations de l'athlète</span>
+          </h2>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="space-y-2">
-            <label for="id" class="block text-sm font-medium text-slate-700">Identifiant athlète</label>
-            <input type="text" id="id" placeholder="Ex: ATH2024001" required
-              class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label for="athlete_id" class="block text-sm font-medium text-slate-700">Identifiant athlète</label>
+              <input type="text" id="athlete_id" placeholder="Ex: ATH2024001"
+                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
+
+            <div class="space-y-2">
+              <label for="athlete_nom" class="block text-sm font-medium text-slate-700">Nom de famille</label>
+              <input type="text" id="athlete_nom" placeholder="Nom de l'athlète"
+                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
+
+            <div class="space-y-2">
+              <label for="athlete_prenom" class="block text-sm font-medium text-slate-700">Prénom</label>
+              <input type="text" id="athlete_prenom" placeholder="Prénom de l'athlète"
+                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
+
+            <div class="space-y-2">
+              <label for="athlete_naissance" class="block text-sm font-medium text-slate-700">Date de naissance</label>
+              <input type="date" id="athlete_naissance" class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
           </div>
+        </div>
+
+        <!-- Informations géographiques -->
+        <div class="space-y-4">
+          <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
+            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Localisation</span>
+          </h2>
 
           <div class="space-y-2">
-            <label for="nom" class="block text-sm font-medium text-slate-700">Nom de famille</label>
-            <input type="text" id="nom" placeholder="Nom de l'athlète" required
-              class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            <label for="athlete_departement" class="block text-sm font-medium text-slate-700">Département de
+              provenance</label>
+            <select id="athlete_departement" class="form-input w-full px-4 py-3 rounded-lg text-slate-900 bg-white">
+              <option value="">Sélectionnez votre département</option>
+              <option value="Alibori">Alibori</option>
+              <option value="Atacora">Atacora</option>
+              <option value="Atlantique">Atlantique</option>
+              <option value="Borgou">Borgou</option>
+              <option value="Collines">Collines</option>
+              <option value="Donga">Donga</option>
+              <option value="Kouffo">Kouffo</option>
+              <option value="Littoral">Littoral</option>
+              <option value="Mono">Mono</option>
+              <option value="Ouémé">Ouémé</option>
+              <option value="Plateau">Plateau</option>
+              <option value="Zou">Zou</option>
+            </select>
           </div>
+        </div>
 
-          <div class="space-y-2">
-            <label for="prenom" class="block text-sm font-medium text-slate-700">Prénom</label>
-            <input type="text" id="prenom" placeholder="Prénom de l'athlète" required
-              class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
-          </div>
+        <!-- Informations sur les parents -->
+        <div class="space-y-4">
+          <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
+            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <span>Informations sur les parents</span>
+          </h2>
 
-          <div class="space-y-2">
-            <label for="naissance" class="block text-sm font-medium text-slate-700">Date de naissance</label>
-            <input type="date" id="naissance" required class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label for="athlete_nom_pere" class="block text-sm font-medium text-slate-700">Nom du père</label>
+              <input type="text" id="athlete_nom_pere" placeholder="Ex: AHOUANDJINOU"
+                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
+            <div class="space-y-2">
+              <label for="athlete_prenom_pere" class="block text-sm font-medium text-slate-700">Prénom du père</label>
+              <input type="text" id="athlete_prenom_pere" placeholder="Ex: Augustin"
+                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
+            <div class="space-y-2">
+              <label for="athlete_nom_mere" class="block text-sm font-medium text-slate-700">Nom de la mère</label>
+              <input type="text" id="athlete_nom_mere" placeholder="Ex: KIKI"
+                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
+            <div class="space-y-2">
+              <label for="athlete_prenom_mere" class="block text-sm font-medium text-slate-700">Prénom de la
+                mère</label>
+              <input type="text" id="athlete_prenom_mere" placeholder="Ex: Blandine"
+                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Informations géographiques -->
-      <div class="space-y-4">
-        <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
-          <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          <span>Localisation</span>
-        </h2>
+      <!-- Formulaire Recruteur -->
+      <div id="recruteur-form" class="form-section hidden">
+        <!-- Informations personnelles -->
+        <div class="space-y-4">
+          <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
+            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span>Informations du recruteur</span>
+          </h2>
 
-        <div class="space-y-2">
-          <label for="departement" class="block text-sm font-medium text-slate-700">Département de provenance</label>
-          <select id="departement" required class="form-input w-full px-4 py-3 rounded-lg text-slate-900 bg-white">
-            <option value="">Sélectionnez votre département</option>
-            <option value="Alibori">Alibori</option>
-            <option value="Atacora">Atacora</option>
-            <option value="Atlantique">Atlantique</option>
-            <option value="Borgou">Borgou</option>
-            <option value="Collines">Collines</option>
-            <option value="Donga">Donga</option>
-            <option value="Kouffo">Kouffo</option>
-            <option value="Littoral">Littoral</option>
-            <option value="Mono">Mono</option>
-            <option value="Ouémé">Ouémé</option>
-            <option value="Plateau">Plateau</option>
-            <option value="Zou">Zou</option>
-          </select>
-        </div>
-      </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label for="recruteur_id" class="block text-sm font-medium text-slate-700">Identifiant recruteur</label>
+              <input type="text" id="recruteur_id" placeholder="Ex: REC2024001"
+                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
 
-      <!-- Informations sur les parents -->
-      <div class="space-y-4">
-        <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
-          <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M5.121 17.804A13.937 13.937 0 0112 15c2.761 0 5.304.832 7.379 2.25M15 10a3 3 0 01-6 0m9.121-4.879A3 3 0 0015 4H9a3 3 0 00-2.121.879" />
-          </svg>
-          <span>Informations sur les parents</span>
-        </h2>
+            <div class="space-y-2">
+              <label for="recruteur_nom" class="block text-sm font-medium text-slate-700">Nom de famille</label>
+              <input type="text" id="recruteur_nom" placeholder="Nom du recruteur"
+                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="space-y-2">
-            <label for="nom_pere" class="block text-sm font-medium text-slate-700">Nom du père</label>
-            <input type="text" id="nom_pere" placeholder="Ex: AHOUANDJINOU"
-              class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
-          </div>
-          <div class="space-y-2">
-            <label for="prenom_pere" class="block text-sm font-medium text-slate-700">Prénom du père</label>
-            <input type="text" id="prenom_pere" placeholder="Ex: Augustin"
-              class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
-          </div>
-          <div class="space-y-2">
-            <label for="nom_mere" class="block text-sm font-medium text-slate-700">Nom de la mère</label>
-            <input type="text" id="nom_mere" placeholder="Ex: KIKI"
-              class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
-          </div>
-          <div class="space-y-2">
-            <label for="prenom_mere" class="block text-sm font-medium text-slate-700">Prénom de la mère</label>
-            <input type="text" id="prenom_mere" placeholder="Ex: Blandine"
-              class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            <div class="space-y-2">
+              <label for="recruteur_prenom" class="block text-sm font-medium text-slate-700">Prénom</label>
+              <input type="text" id="recruteur_prenom" placeholder="Prénom du recruteur"
+                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
+
+            <div class="space-y-2">
+              <label for="recruteur_email" class="block text-sm font-medium text-slate-700">Email professionnel</label>
+              <input type="email" id="recruteur_email" placeholder="email@exemple.com"
+                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
+
+            <div class="space-y-2">
+              <label for="recruteur_telephone" class="block text-sm font-medium text-slate-700">Téléphone</label>
+              <input type="tel" id="recruteur_telephone" placeholder="+229 XX XX XX XX"
+                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
+
+            <div class="space-y-2">
+              <label for="recruteur_fonction" class="block text-sm font-medium text-slate-700">Fonction</label>
+              <input type="text" id="recruteur_fonction" placeholder="Ex: Scout, Entraîneur, Directeur technique"
+                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+            </div>
           </div>
         </div>
       </div>
-
 
       <!-- Submit Button -->
       <div class="pt-6">
-        <button type="submit" class="btn-primary w-full text-white py-4 text-base font-medium rounded-lg">
+        <button type="submit" id="submit-btn"
+          class="btn-primary w-full text-white py-4 text-base font-medium rounded-lg opacity-50 cursor-not-allowed"
+          disabled>
           <span class="flex items-center justify-center space-x-3">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -305,23 +420,142 @@
   </div>
 
   <script>
-    const form = document.getElementById("athleteForm");
+    let currentProfileType = null;
+    const form = document.getElementById("profileForm");
     const qrCanvas = document.getElementById("qr-canvas");
     const qrSection = document.getElementById("qr-section");
     const timestampElement = document.getElementById("qr-timestamp");
+    const submitBtn = document.getElementById("submit-btn");
+
+    // Gestion des radio buttons
+    const radioButtons = document.querySelectorAll('input[name="profile-type"]');
+    const radioCards = document.querySelectorAll('.radio-card');
+
+    radioButtons.forEach((radio, index) => {
+      radio.addEventListener('change', function () {
+        currentProfileType = this.value;
+
+        // Mise à jour visuelle des cartes
+        radioCards.forEach(card => card.classList.remove('selected'));
+        radioCards[index].classList.add('selected');
+
+        // Affichage du formulaire correspondant
+        showForm(this.value);
+
+        // Activation du bouton submit
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      });
+    });
+
+    function showForm(type) {
+      const athleteForm = document.getElementById('athlete-form');
+      const recruteurForm = document.getElementById('recruteur-form');
+
+      if (type === 'athlete') {
+        athleteForm.classList.remove('hidden');
+        recruteurForm.classList.add('hidden');
+      } else if (type === 'recruteur') {
+        recruteurForm.classList.remove('hidden');
+        athleteForm.classList.add('hidden');
+      }
+    }
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
 
+      if (!currentProfileType) {
+        alert('Veuillez sélectionner un type de profil');
+        return;
+      }
+
+      let data, requiredFields;
+      const now = new Date();
+
+      if (currentProfileType === 'athlete') {
+        // Validation des champs obligatoires pour athlète
+        requiredFields = ['athlete_id', 'athlete_nom', 'athlete_prenom', 'athlete_naissance', 'athlete_departement'];
+
+        data = {
+          type: 'athlete',
+          athlete: {
+            id: document.getElementById("athlete_id").value.trim().toUpperCase(),
+            nom: document.getElementById("athlete_nom").value.trim().toUpperCase(),
+            prenom: document.getElementById("athlete_prenom").value.trim(),
+            naissance: document.getElementById("athlete_naissance").value
+          },
+          localisation: {
+            departement: document.getElementById("athlete_departement").value
+          },
+          parents: {
+            pere: {
+              nom: document.getElementById("athlete_nom_pere").value.trim().toUpperCase() || null,
+              prenom: document.getElementById("athlete_prenom_pere").value.trim() || null
+            },
+            mere: {
+              nom: document.getElementById("athlete_nom_mere").value.trim().toUpperCase() || null,
+              prenom: document.getElementById("athlete_prenom_mere").value.trim() || null
+            }
+          },
+          association: {
+            nom: "AS FINANCES",
+            section: "Athlétisme U15"
+          },
+          generated: {
+            timestamp: now.toISOString(),
+            date: now.toLocaleDateString('fr-FR'),
+            time: now.toLocaleTimeString('fr-FR')
+          }
+        };
+
+        // Nettoyage des données parents vides
+        if (!data.parents.pere.nom && !data.parents.pere.prenom) {
+          data.parents.pere = null;
+        }
+        if (!data.parents.mere.nom && !data.parents.mere.prenom) {
+          data.parents.mere = null;
+        }
+        if (!data.parents.pere && !data.parents.mere) {
+          delete data.parents;
+        }
+
+      } else if (currentProfileType === 'recruteur') {
+        // Validation des champs obligatoires pour recruteur
+        requiredFields = ['recruteur_id', 'recruteur_nom', 'recruteur_prenom', 'recruteur_email', 'recruteur_telephone', 'recruteur_fonction'];
+
+        data = {
+          type: 'recruteur',
+          recruteur: {
+            id: document.getElementById("recruteur_id").value.trim().toUpperCase(),
+            nom: document.getElementById("recruteur_nom").value.trim().toUpperCase(),
+            prenom: document.getElementById("recruteur_prenom").value.trim(),
+            email: document.getElementById("recruteur_email").value.trim().toLowerCase(),
+            telephone: document.getElementById("recruteur_telephone").value.trim(),
+            fonction: document.getElementById("recruteur_fonction").value.trim()
+          },
+          association: {
+            nom: "AS FINANCES",
+            section: "Athlétisme U15"
+          },
+          generated: {
+            timestamp: now.toISOString(),
+            date: now.toLocaleDateString('fr-FR'),
+            time: now.toLocaleTimeString('fr-FR')
+          }
+        };
+
+        // Nettoyage des données vides
+        if (!data.specialites.sports && !data.specialites.age_cible) {
+          delete data.specialites;
+        }
+      }
+
       // Validation des champs obligatoires
-      const requiredFields = ['id', 'nom', 'prenom', 'naissance', 'departement', 'nom_pere', 'prenom_pere', 'nom_mere', 'prenom_mere'];
       let isValid = true;
       let firstInvalidField = null;
 
       requiredFields.forEach(fieldId => {
         const field = document.getElementById(fieldId);
-        const fieldContainer = field.parentElement;
-
         if (!field.value.trim()) {
           field.classList.add('border-red-300', 'bg-red-50');
           field.classList.remove('border-slate-200');
@@ -335,57 +569,13 @@
 
       if (!isValid) {
         firstInvalidField.focus();
+        alert('Veuillez remplir tous les champs obligatoires');
         return;
-      }
-
-      const now = new Date();
-      
-      // Construction complète des données pour le QR Code
-      const data = {
-        athlete: {
-          id: document.getElementById("id").value.trim().toUpperCase(),
-          nom: document.getElementById("nom").value.trim().toUpperCase(),
-          prenom: document.getElementById("prenom").value.trim(),
-          naissance: document.getElementById("naissance").value
-        },
-        localisation: {
-          departement: document.getElementById("departement").value
-        },
-        parents: {
-          pere: {
-            nom: document.getElementById("nom_pere").value.trim().toUpperCase() || null,
-            prenom: document.getElementById("prenom_pere").value.trim() || null
-          },
-          mere: {
-            nom: document.getElementById("nom_mere").value.trim().toUpperCase() || null,
-            prenom: document.getElementById("prenom_mere").value.trim() || null
-          }
-        },
-        association: {
-          nom: "AS FINANCES",
-          section: "Athlétisme U15"
-        },
-        generated: {
-          timestamp: now.toISOString(),
-          date: now.toLocaleDateString('fr-FR'),
-          time: now.toLocaleTimeString('fr-FR')
-        }
-      };
-
-      // Nettoyage des données vides pour optimiser la taille du QR Code
-      if (!data.parents.pere.nom && !data.parents.pere.prenom) {
-        data.parents.pere = null;
-      }
-      if (!data.parents.mere.nom && !data.parents.mere.prenom) {
-        data.parents.mere = null;
-      }
-      if (!data.parents.pere && !data.parents.mere) {
-        delete data.parents;
       }
 
       const jsonString = JSON.stringify(data, null, 2);
 
-      // Options QR Code optimisées pour les données complètes
+      // Options QR Code
       const options = {
         width: 280,
         height: 280,
@@ -394,20 +584,19 @@
           dark: '#374151',
           light: '#FFFFFF'
         },
-        errorCorrectionLevel: 'M' // Niveau de correction d'erreur moyen
+        errorCorrectionLevel: 'M'
       };
 
       qrCanvas.innerHTML = "";
       QRCode.toCanvas(qrCanvas, jsonString, options, function (error) {
         if (error) {
           console.error(error);
-          alert('Erreur lors de la génération du QR Code. Les données peuvent être trop volumineuses. Veuillez réessayer.');
+          alert('Erreur lors de la génération du QR Code. Veuillez réessayer.');
         } else {
           timestampElement.textContent = `Généré le ${data.generated.date} à ${data.generated.time}`;
           qrSection.classList.remove("hidden");
           qrSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          
-          // Affichage optionnel des données dans la console pour debug
+
           console.log("Données encodées dans le QR Code:", data);
         }
       });
@@ -416,13 +605,20 @@
     function downloadQR() {
       const canvas = qrCanvas;
       const link = document.createElement('a');
-      const athleteData = {
-        nom: document.getElementById("nom").value.trim(),
-        prenom: document.getElementById("prenom").value.trim(),
-        id: document.getElementById("id").value.trim()
-      };
+      let fileName;
 
-      const fileName = `QR-${athleteData.nom.replace(/\s+/g, '')}-${athleteData.prenom.replace(/\s+/g, '')}-${athleteData.id}`.toUpperCase();
+      if (currentProfileType === 'athlete') {
+        const nom = document.getElementById("athlete_nom").value.trim();
+        const prenom = document.getElementById("athlete_prenom").value.trim();
+        const id = document.getElementById("athlete_id").value.trim();
+        fileName = `QR-ATHLETE-${nom.replace(/\s+/g, '')}-${prenom.replace(/\s+/g, '')}-${id}`.toUpperCase();
+      } else if (currentProfileType === 'recruteur') {
+        const nom = document.getElementById("recruteur_nom").value.trim();
+        const prenom = document.getElementById("recruteur_prenom").value.trim();
+        const id = document.getElementById("recruteur_id").value.trim();
+        fileName = `QR-RECRUTEUR-${nom.replace(/\s+/g, '')}-${prenom.replace(/\s+/g, '')}-${id}`.toUpperCase();
+      }
+
       link.download = `${fileName}.png`;
       link.href = canvas.toDataURL("image/png", 1.0);
       link.click();
@@ -431,6 +627,14 @@
     function resetForm() {
       form.reset();
       qrSection.classList.add("hidden");
+      currentProfileType = null;
+
+      // Reset radio cards
+      radioCards.forEach(card => card.classList.remove('selected'));
+
+      // Hide all forms
+      document.getElementById('athlete-form').classList.add('hidden');
+      document.getElementById('recruteur-form').classList.add('hidden');
 
       // Reset field styles
       document.querySelectorAll('.form-input').forEach(input => {
@@ -438,46 +642,61 @@
         input.classList.add('border-slate-200');
       });
 
-      document.getElementById("id").focus();
+      // Disable submit button
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Auto-focus et amélioration UX
-    document.addEventListener('DOMContentLoaded', function () {
-      document.getElementById("id").focus();
-    });
-
-    // Formatage automatique des champs
-    document.getElementById("id").addEventListener('input', function (e) {
+    // Formatage automatique des champs - Athlète
+    document.getElementById("athlete_id").addEventListener('input', function (e) {
       this.value = this.value.toUpperCase();
     });
 
-    document.getElementById("nom").addEventListener('input', function (e) {
+    document.getElementById("athlete_nom").addEventListener('input', function (e) {
       this.value = this.value.toUpperCase();
     });
 
-    document.getElementById("prenom").addEventListener('input', function (e) {
+    document.getElementById("athlete_prenom").addEventListener('input', function (e) {
       const value = this.value;
       this.value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
     });
 
-    // Formatage automatique des noms des parents
-    document.getElementById("nom_pere").addEventListener('input', function (e) {
+    document.getElementById("athlete_nom_pere").addEventListener('input', function (e) {
       this.value = this.value.toUpperCase();
     });
 
-    document.getElementById("nom_mere").addEventListener('input', function (e) {
+    document.getElementById("athlete_nom_mere").addEventListener('input', function (e) {
       this.value = this.value.toUpperCase();
     });
 
-    document.getElementById("prenom_pere").addEventListener('input', function (e) {
+    document.getElementById("athlete_prenom_pere").addEventListener('input', function (e) {
       const value = this.value;
       this.value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
     });
 
-    document.getElementById("prenom_mere").addEventListener('input', function (e) {
+    document.getElementById("athlete_prenom_mere").addEventListener('input', function (e) {
       const value = this.value;
       this.value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+    });
+
+    // Formatage automatique des champs - Recruteur
+    document.getElementById("recruteur_id").addEventListener('input', function (e) {
+      this.value = this.value.toUpperCase();
+    });
+
+    document.getElementById("recruteur_nom").addEventListener('input', function (e) {
+      this.value = this.value.toUpperCase();
+    });
+
+    document.getElementById("recruteur_prenom").addEventListener('input', function (e) {
+      const value = this.value;
+      this.value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+    });
+
+    document.getElementById("recruteur_email").addEventListener('input', function (e) {
+      this.value = this.value.toLowerCase();
     });
   </script>
 
