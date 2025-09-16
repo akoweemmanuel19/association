@@ -60,17 +60,6 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
-    .btn-card {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      transition: all 0.2s ease;
-    }
-
-    .btn-card:hover {
-      background: linear-gradient(135deg, #059669 0%, #047857 100%);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
-    }
-
     .header-accent {
       background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
       -webkit-background-clip: text;
@@ -141,110 +130,6 @@
       height: 0;
       overflow: hidden;
     }
-
-    /* Style pour la carte d'adhésion */
-    .membership-card {
-      width: 350px;
-      height: 220px;
-      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
-      border-radius: 15px;
-      padding: 20px;
-      color: white;
-      position: relative;
-      overflow: hidden;
-      font-family: 'Inter', sans-serif;
-      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
-    }
-
-    .membership-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -50%;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .card-logo {
-      width: 50px;
-      height: 50px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    .card-type {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      opacity: 0.9;
-    }
-
-    .card-name {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 5px;
-      text-transform: uppercase;
-    }
-
-    .card-id {
-      font-size: 14px;
-      opacity: 0.9;
-      margin-bottom: 15px;
-    }
-
-    .card-footer {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .card-association {
-      font-size: 11px;
-      font-weight: 600;
-      opacity: 0.8;
-    }
-
-    .card-qr {
-      width: 50px;
-      height: 50px;
-      background: white;
-      border-radius: 8px;
-      padding: 5px;
-    }
-
-    .card-preview {
-      transform: scale(1.2);
-      margin: 20px auto;
-    }
-
-    @media print {
-      .no-print {
-        display: none !important;
-      }
-
-      .membership-card {
-        box-shadow: none;
-      }
-    }
   </style>
 </head>
 
@@ -258,10 +143,10 @@
       </div>
 
       <div class="flex items-center justify-center space-x-4 mb-6">
-        <a href="#" class="text-xl text-blue-500 font-semibold mb-3">
+        <a href="index.html" class="text-xl text-blue-500 font-semibold mb-3">
           Générateur de QR Code
         </a>
-        <a href="#" class="text-xl font-semibold header-accent mb-3">
+        <a href="fiche-engagement.html" class="text-xl font-semibold header-accent mb-3">
           Fiche d'engagement
         </a>
       </div>
@@ -474,7 +359,7 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
-            <span>Générer le code QR & Carte d'adhésion</span>
+            <span>Générer le code QR</span>
           </span>
         </button>
       </div>
@@ -509,16 +394,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
-            <span>Télécharger QR</span>
-          </button>
-
-          <button onclick="downloadMembershipCard()"
-            class="btn-card text-white px-6 py-3 rounded-lg font-medium flex items-center justify-center space-x-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-            </svg>
-            <span>Télécharger Carte</span>
+            <span>Télécharger PNG</span>
           </button>
 
           <button onclick="window.print()"
@@ -541,35 +417,12 @@
         </div>
       </div>
     </div>
-
-    <!-- Membership Card Preview (Hidden) -->
-    <div id="membership-card-container" style="position: absolute; left: -9999px;">
-      <div id="membership-card" class="membership-card">
-        <div class="card-header">
-          <div class="card-logo">AS</div>
-          <div class="card-type" id="card-type-text">MEMBRE</div>
-        </div>
-
-        <div class="card-name" id="card-name"></div>
-        <div class="card-id" id="card-id-text"></div>
-
-        <div class="card-footer">
-          <div>
-            <div class="card-association">AS FINANCES</div>
-            <div class="card-association">Section Athlétisme U15</div>
-          </div>
-          <canvas id="card-qr" class="card-qr"></canvas>
-        </div>
-      </div>
-    </div>
   </div>
 
   <script>
     let currentProfileType = null;
-    let currentData = null;
     const form = document.getElementById("profileForm");
     const qrCanvas = document.getElementById("qr-canvas");
-    const cardQrCanvas = document.getElementById("card-qr");
     const qrSection = document.getElementById("qr-section");
     const timestampElement = document.getElementById("qr-timestamp");
     const submitBtn = document.getElementById("submit-btn");
@@ -715,7 +568,6 @@
         return;
       }
 
-      currentData = data;
       const jsonString = JSON.stringify(data, null, 2);
 
       // Options QR Code
@@ -740,49 +592,10 @@
           qrSection.classList.remove("hidden");
           qrSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-          // Générer le QR code pour la carte aussi
-          generateCardQR(jsonString);
-          updateMembershipCard(data);
-
           console.log("Données encodées dans le QR Code:", data);
         }
       });
     });
-
-    function generateCardQR(jsonString) {
-      const cardOptions = {
-        width: 50,
-        height: 50,
-        margin: 1,
-        color: {
-          dark: '#000000',
-          light: '#FFFFFF'
-        },
-        errorCorrectionLevel: 'M'
-      };
-
-      QRCode.toCanvas(cardQrCanvas, jsonString, cardOptions, function (error) {
-        if (error) {
-          console.error("Erreur génération QR carte:", error);
-        }
-      });
-    }
-
-    function updateMembershipCard(data) {
-      const cardNameElement = document.getElementById('card-name');
-      const cardIdElement = document.getElementById('card-id-text');
-      const cardTypeElement = document.getElementById('card-type-text');
-
-      if (data.type === 'athlete') {
-        cardNameElement.textContent = `${data.athlete.prenom} ${data.athlete.nom}`;
-        cardIdElement.textContent = `ID: ${data.athlete.id}`;
-        cardTypeElement.textContent = 'ATHLÈTE';
-      } else if (data.type === 'entraineur') {
-        cardNameElement.textContent = `${data.entraineur.prenom} ${data.entraineur.nom}`;
-        cardIdElement.textContent = `ID: ${data.entraineur.id}`;
-        cardTypeElement.textContent = 'ENTRAINEUR';
-      }
-    }
 
     function downloadQR() {
       const canvas = qrCanvas;
@@ -798,7 +611,7 @@
         const nom = document.getElementById("recruteur_nom").value.trim();
         const prenom = document.getElementById("recruteur_prenom").value.trim();
         const id = document.getElementById("recruteur_id").value.trim();
-        fileName = `QR-ENTRAINEUR-${nom.replace(/\s+/g, '')}-${prenom.replace(/\s+/g, '')}-${id}`.toUpperCase();
+        fileName = `QR-entraineur-${nom.replace(/\s+/g, '')}-${prenom.replace(/\s+/g, '')}-${id}`.toUpperCase();
       }
 
       link.download = `${fileName}.png`;
@@ -806,121 +619,10 @@
       link.click();
     }
 
-    function downloadMembershipCard() {
-      if (!currentData) {
-        alert('Aucune donnée disponible pour générer la carte');
-        return;
-      }
-
-      // Créer un canvas pour capturer la carte
-      const card = document.getElementById('membership-card');
-      const cardContainer = document.getElementById('membership-card-container');
-
-      // Temporairement afficher la carte pour la capturer
-      cardContainer.style.position = 'fixed';
-      cardContainer.style.left = '0';
-      cardContainer.style.top = '0';
-      cardContainer.style.zIndex = '-1';
-
-      // Utiliser html2canvas ou une méthode alternative
-      // Ici, nous allons créer un canvas manuellement
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-
-      // Dimensions de la carte
-      canvas.width = 700; // 350px * 2 pour meilleure qualité
-      canvas.height = 440; // 220px * 2
-
-      // Dessiner le background gradient
-      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      gradient.addColorStop(0, '#1e40af');
-      gradient.addColorStop(0.5, '#3b82f6');
-      gradient.addColorStop(1, '#60a5fa');
-
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Arrondir les coins
-      ctx.globalCompositeOperation = 'destination-in';
-      ctx.beginPath();
-      ctx.roundRect(0, 0, canvas.width, canvas.height, 30);
-      ctx.fill();
-      ctx.globalCompositeOperation = 'source-over';
-
-      // Dessiner le logo
-      ctx.fillStyle = 'rgba(255,255,255,0.2)';
-      ctx.beginPath();
-      ctx.roundRect(40, 40, 100, 100, 20);
-      ctx.fill();
-
-      ctx.fillStyle = 'white';
-      ctx.font = 'bold 32px Inter';
-      ctx.textAlign = 'center';
-      ctx.fillText('AS', 90, 105);
-
-      // Type de carte
-      ctx.font = 'bold 24px Inter';
-      ctx.textAlign = 'right';
-      ctx.fillStyle = 'rgba(255,255,255,0.9)';
-      const cardType = currentData.type === 'athlete' ? 'ATHLÈTE' : 'ENTRAINEUR';
-      ctx.fillText(cardType, canvas.width - 40, 70);
-
-      // Nom
-      ctx.font = 'bold 36px Inter';
-      ctx.textAlign = 'left';
-      ctx.fillStyle = 'white';
-      let fullName;
-      if (currentData.type === 'athlete') {
-        fullName = `${currentData.athlete.prenom} ${currentData.athlete.nom}`;
-      } else {
-        fullName = `${currentData.entraineur.prenom} ${currentData.entraineur.nom}`;
-      }
-      ctx.fillText(fullName.toUpperCase(), 40, 200);
-
-      // ID
-      ctx.font = '28px Inter';
-      ctx.fillStyle = 'rgba(255,255,255,0.9)';
-      const id = currentData.type === 'athlete' ? currentData.athlete.id : currentData.entraineur.id;
-      ctx.fillText(`ID: ${id}`, 40, 240);
-
-      // Association
-      ctx.font = 'bold 22px Inter';
-      ctx.fillStyle = 'rgba(255,255,255,0.8)';
-      ctx.fillText('AS FINANCES', 40, canvas.height - 60);
-      ctx.font = '22px Inter';
-      ctx.fillText('Section Athlétisme U15', 40, canvas.height - 30);
-
-      // QR Code (récupérer depuis le canvas existant)
-      const qrData = cardQrCanvas.toDataURL();
-      const qrImage = new Image();
-      qrImage.onload = function () {
-        ctx.drawImage(qrImage, canvas.width - 140, canvas.height - 140, 100, 100);
-
-        // Télécharger l'image
-        const link = document.createElement('a');
-        let fileName;
-        if (currentData.type === 'athlete') {
-          fileName = `CARTE-ATHLETE-${currentData.athlete.nom.replace(/\s+/g, '')}-${currentData.athlete.prenom.replace(/\s+/g, '')}-${currentData.athlete.id}`;
-        } else {
-          fileName = `CARTE-ENTRAINEUR-${currentData.entraineur.nom.replace(/\s+/g, '')}-${currentData.entraineur.prenom.replace(/\s+/g, '')}-${currentData.entraineur.id}`;
-        }
-
-        link.download = `${fileName}.png`;
-        link.href = canvas.toDataURL('image/png', 1.0);
-        link.click();
-
-        // Remettre la carte hors écran
-        cardContainer.style.position = 'absolute';
-        cardContainer.style.left = '-9999px';
-      };
-      qrImage.src = qrData;
-    }
-
     function resetForm() {
       form.reset();
       qrSection.classList.add("hidden");
       currentProfileType = null;
-      currentData = null;
 
       // Reset radio cards
       radioCards.forEach(card => card.classList.remove('selected'));
@@ -991,23 +693,6 @@
     document.getElementById("recruteur_email").addEventListener('input', function (e) {
       this.value = this.value.toLowerCase();
     });
-
-    // Fonction pour arrondir les rectangles (polyfill)
-    if (!CanvasRenderingContext2D.prototype.roundRect) {
-      CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius) {
-        this.beginPath();
-        this.moveTo(x + radius, y);
-        this.lineTo(x + width - radius, y);
-        this.quadraticCurveTo(x + width, y, x + width, y + radius);
-        this.lineTo(x + width, y + height - radius);
-        this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-        this.lineTo(x + radius, y + height);
-        this.quadraticCurveTo(x, y + height, x, y + height - radius);
-        this.lineTo(x, y + radius);
-        this.quadraticCurveTo(x, y, x + radius, y);
-        this.closePath();
-      };
-    }
   </script>
 
 </body>
