@@ -632,7 +632,6 @@
             }
 
             // --- Génération de la Fiche ---
-
             const aujourdhui = new Date().toLocaleDateString('fr-FR');
             let ficheContent = '';
 
@@ -642,7 +641,7 @@
                 const naissanceParent = dateNaissanceParentValue ? new Date(dateNaissanceParentValue).toLocaleDateString('fr-FR') : 'Date non spécifiée';
                 const carteParent = document.getElementById('carteParent').value.trim();
                 const expirationCarteParentValue = document.getElementById('expirationCarteParent').value;
-                const expirationCarteParent = expirationCarteParentValue ? new Date(expirationCarteParentValue).toLocaleDateString('fr-FR') : 'Date non spécifiée';
+                const expirationCarteParent = expirationCarteParentValue ? new Date(expirationCarteParentValue).toLocaleDateString('fr-FR') : '-';
                 const nomEnfant = document.getElementById('nomEnfant').value.trim();
                 const dateNaissanceEnfantValue = document.getElementById('naissanceEnfant').value;
                 const naissanceEnfant = dateNaissanceEnfantValue ? new Date(dateNaissanceEnfantValue).toLocaleDateString('fr-FR') : 'Date non spécifiée';
@@ -651,7 +650,6 @@
                 ficheContent = `
                     <p class="text-sm leading-relaxed">
                         Je soussigné(e), <strong class="uppercase">${nomParent}</strong>, 
-                        né(e) le <strong>${naissanceParent}</strong>, 
                         titulaire de la carte d'identité numéro <strong>${carteParent}</strong> (expire le <strong>${expirationCarteParent}</strong>), 
                         en ma qualité de parent/tuteur légal de <strong class="uppercase">${nomEnfant}</strong>, 
                         né(e) le <strong>${naissanceEnfant}</strong>, autorise et m'engage à ce que mon enfant 
