@@ -536,38 +536,34 @@
                 const niveau = document.getElementById('niveau').value;
 
                 ficheContent = `
-                    <p class="text-sm leading-relaxed">
-                        Je soussigné(e), <strong class="uppercase">${nomEntraineur}</strong>, 
-                        ${fonctionEntraineur} de l'Association Sportive des Finances, section Athlétisme U12, 
-                        joignable au <strong>${telephoneEntraineur}</strong>${emailEntraineur ? ` et à l'adresse <strong>${emailEntraineur}</strong>` : ''}, 
-                        certifie par la présente avoir pris en charge l'encadrement sportif de 
-                        <strong class="uppercase">${nomAthlete}</strong>, né(e) le <strong>${naissanceAthlete}</strong>, 
-                        spécialiste en <strong>${specialite}</strong>, niveau <strong>${niveau}</strong>, 
-                        au sein de notre association.
-                    </p>
+                <p class="text-sm leading-relaxed">
+                    Je soussigné(e), <strong class="uppercase">${nomEntraineur}</strong>, 
+                    ${fonctionEntraineur} de l'Association Sportive des Finances, section Athlétisme U12, 
+                    joignable au <strong>${telephoneEntraineur}</strong>${emailEntraineur ? ` et à l'adresse <strong>${emailEntraineur}</strong>` : ''}, 
+                    certifie avoir pris en charge l'encadrement sportif de 
+                    <strong class="uppercase">${nomAthlete}</strong>, né(e) le <strong>${naissanceAthlete}</strong>, 
+                    spécialiste en <strong>${specialite}</strong>, niveau <strong>${niveau}</strong>.
+                </p>
 
-                    <p class="text-sm font-medium text-slate-700 mt-6 mb-4">En tant qu'entraîneur, je m'engage à :</p>
+                <p class="text-sm font-medium text-slate-700 mt-6 mb-3">En tant qu'entraîneur, je m'engage à :</p>
 
-                    <ul class="list-disc list-inside space-y-2 text-sm text-slate-700 ml-4">
-                        <li>assurer un suivi régulier et personnalisé de l'athlète</li>
-                        <li>veiller au respect des règlements et textes de l'association par l'athlète</li>
-                        <li>garantir un encadrement technique de qualité adapté au niveau de l'athlète</li>
-                        <li>promouvoir les valeurs d'éthique, de discipline et de fair-play</li>
-                        <li>faciliter l'intégration de l'athlète au sein de l'équipe et de l'association</li>
-                        <li>accompagner le développement sportif et personnel de l'athlète</li>
-                        <li>communiquer régulièrement avec les parents/tuteurs concernant l'évolution de l'athlète</li>
-                        <li>signaler toute difficulté ou situation particulière à la direction de l'association</li>
-                        <li>respecter le calendrier d'entraînement et de compétition établi</li>
-                        <li>contribuer activement à l'atteinte des objectifs sportifs de l'association</li>
-                        <li>respecter les règles de protection des enfants mineurs et en particulier des filles en République du Bénin</li>
-                    </ul>
+                <ul class="list-disc list-inside text-sm text-slate-700 ml-4 space-y-1">
+                    <li>assurer un suivi régulier et adapté de l'athlète</li>
+                    <li>veiller au respect des règlements de l'association</li>
+                    <li>garantir un encadrement technique et éducatif de qualité</li>
+                    <li>promouvoir discipline, éthique et fair-play</li>
+                    <li>communiquer avec les parents/tuteurs et signaler toute difficulté</li>
+                    <li>respecter le calendrier d'entraînement et de compétition</li>
+                    <li>protéger et accompagner le développement de l'athlète</li>
+                </ul>
 
-                    <p class="text-sm leading-relaxed mt-6 font-medium">
-                        Je reconnais avoir pris connaissance des règlements de l'Association Sportive des Finances 
-                        et m'engage à les respecter. Le présent engagement d'encadrement est fait en toute connaissance 
-                        de cause pour le développement sportif de l'athlète et de l'association.
-                    </p>
-                    `;
+                <p class="text-sm leading-relaxed mt-6 font-medium">
+                    Je déclare avoir pris connaissance des règlements de l'Association Sportive des Finances 
+                    et m'engage à les respecter. Le présent engagement est établi pour garantir 
+                    le développement sportif et personnel de l'athlète ainsi que la réussite collective de l'association.
+                </p>
+                `;
+
 
                 signatureLabel.textContent = 'Signature du entraineur';
             }
