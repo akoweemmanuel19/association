@@ -7,6 +7,7 @@
   <title>QR Code - AS FINANCES</title>
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
@@ -344,6 +345,20 @@
           </div>
         </div>
 
+        <!-- Photo de l'athlète -->
+        <div class="space-y-2">
+          <label for="athlete_photo" class="block text-sm font-medium text-slate-700">
+            Photo de l'athlète
+          </label>
+          <input type="file" id="athlete_photo" accept="image/*"
+            class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+
+          <!-- Prévisualisation de la photo -->
+          <div id="photo-preview" class="mt-3 hidden">
+            <img id="preview-img" src="" alt="Prévisualisation" class="w-32 h-32 object-cover rounded-lg shadow-md" />
+          </div>
+        </div>
+
         <!-- Informations géographiques -->
         <div class="space-y-4">
           <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
@@ -463,6 +478,21 @@
             </div>
           </div>
         </div>
+
+
+        <!-- Photo du recruteur -->
+        <div class="space-y-2">
+          <label for="recruteur_photo" class="block text-sm font-medium text-slate-700">
+            Photo du recruteur
+          </label>
+          <input type="file" id="recruteur_photo" accept="image/*"
+            class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+
+          <!-- Prévisualisation -->
+          <div id="recruteur-preview" class="mt-3 hidden">
+            <img id="recruteur-img" src="" alt="Photo Recruteur" class="w-32 h-32 object-cover rounded-lg shadow-md" />
+          </div>
+        </div>
       </div>
 
       <!-- Submit Button -->
@@ -542,473 +572,210 @@
       </div>
     </div>
 
-    <!-- Membership Card Preview (Hidden) -->
-    <div id="membership-card-container" style="position: absolute; left: -9999px;">
-      <div id="membership-card" class="membership-card">
-        <div class="card-header">
-          <div class="card-logo">AS</div>
-          <div class="card-type" id="card-type-text">MEMBRE</div>
+    <!-- Carte d'adhésion -->
+    <div id="membership-card"
+      class="hidden w-[350px] h-[220px] mx-auto rounded-2xl shadow-xl my-3 relative overflow-hidden text-white">
+      <!-- Couleur selon le type (gérée par JS via classes bg-blue-600 / bg-green-600) -->
+      <div id="card-bg" class="absolute inset-0"></div>
+
+      <div class="relative z-10 flex flex-col h-full p-4">
+        <!-- En-tête -->
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold">AS Finances</h2>
+          <span id="card-role" class="px-2 py-1 text-xs rounded bg-black/30"></span>
         </div>
 
-        <div class="card-name" id="card-name"></div>
-        <div class="card-id" id="card-id-text"></div>
-
-        <div class="card-footer">
-          <div>
-            <div class="card-association">AS FINANCES</div>
-            <div class="card-association">Section Athlétisme U15</div>
+        <!-- Contenu -->
+        <div class="flex flex-1 mt-2">
+          <!-- Photo -->
+          <div class="flex-shrink-0">
+            <img id="card-photo" class="w-20 h-20 rounded-lg object-cover border-2 border-white shadow-md" />
           </div>
-          <canvas id="card-qr" class="card-qr"></canvas>
+
+          <!-- Infos -->
+          <div id="card-info" class="ml-4 text-sm flex-1 space-y-1">
+            <!-- Rempli en JS -->
+          </div>
+        </div>
+
+        <!-- QR -->
+        <div class="absolute bottom-3 right-3 bg-white p-1 rounded">
+          <canvas id="card-qr" class="w-16 h-16"></canvas>
         </div>
       </div>
     </div>
+
   </div>
 
   <script>
-    let currentProfileType = null;
-    let currentData = null;
-    const form = document.getElementById("profileForm");
-    const qrCanvas = document.getElementById("qr-canvas");
-    const cardQrCanvas = document.getElementById("card-qr");
-    const qrSection = document.getElementById("qr-section");
-    const timestampElement = document.getElementById("qr-timestamp");
+    // Gestion de la sélection du type de profil
+    const typeAthlete = document.getElementById("type-athlete");
+    const typeEntraineur = document.getElementById("type-entraineur");
+    const athleteForm = document.getElementById("athlete-form");
+    const entraineurForm = document.getElementById("entraineur-form");
     const submitBtn = document.getElementById("submit-btn");
 
-    // Gestion des radio buttons
-    const radioButtons = document.querySelectorAll('input[name="profile-type"]');
-    const radioCards = document.querySelectorAll('.radio-card');
-
-    radioButtons.forEach((radio, index) => {
-      radio.addEventListener('change', function () {
-        currentProfileType = this.value;
-
-        // Mise à jour visuelle des cartes
-        radioCards.forEach(card => card.classList.remove('selected'));
-        radioCards[index].classList.add('selected');
-
-        // Affichage du formulaire correspondant
-        showForm(this.value);
-
-        // Activation du bouton submit
+    function toggleForm() {
+      if (typeAthlete.checked) {
+        athleteForm.classList.remove("hidden");
+        entraineurForm.classList.add("hidden");
         submitBtn.disabled = false;
-        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-      });
-    });
-
-    function showForm(type) {
-      const athleteForm = document.getElementById('athlete-form');
-      const entraineurForm = document.getElementById('entraineur-form');
-
-      if (type === 'athlete') {
-        athleteForm.classList.remove('hidden');
-        entraineurForm.classList.add('hidden');
-      } else if (type === 'entraineur') {
-        entraineurForm.classList.remove('hidden');
-        athleteForm.classList.add('hidden');
+        submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+      } else if (typeEntraineur.checked) {
+        entraineurForm.classList.remove("hidden");
+        athleteForm.classList.add("hidden");
+        submitBtn.disabled = false;
+        submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
       }
     }
 
-    form.addEventListener("submit", function (e) {
+    typeAthlete.addEventListener("change", toggleForm);
+    typeEntraineur.addEventListener("change", toggleForm);
+
+    // Prévisualisation photo Athlète
+    document.getElementById("athlete_photo").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          document.getElementById("preview-img").src = event.target.result;
+          document.getElementById("photo-preview").classList.remove("hidden");
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Prévisualisation photo Entraineur
+    document.getElementById("recruteur_photo").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          document.getElementById("recruteur-img").src = event.target.result;
+          document.getElementById("recruteur-preview").classList.remove("hidden");
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Gestion du formulaire
+    document.getElementById("profileForm").addEventListener("submit", (e) => {
       e.preventDefault();
 
-      if (!currentProfileType) {
-        alert('Veuillez sélectionner un type de profil');
-        return;
-      }
-
-      let data, requiredFields;
-      const now = new Date();
-
-      if (currentProfileType === 'athlete') {
-        // Validation des champs obligatoires pour athlète
-        requiredFields = ['athlete_id', 'athlete_nom', 'athlete_prenom', 'athlete_naissance', 'athlete_departement'];
-
-        data = {
-          type: 'athlete',
-          athlete: {
-            id: document.getElementById("athlete_id").value.trim().toUpperCase(),
-            nom: document.getElementById("athlete_nom").value.trim().toUpperCase(),
-            prenom: document.getElementById("athlete_prenom").value.trim(),
-            naissance: document.getElementById("athlete_naissance").value
-          },
-          localisation: {
-            departement: document.getElementById("athlete_departement").value
-          },
-          parents: {
-            pere: {
-              nom: document.getElementById("athlete_nom_pere").value.trim().toUpperCase() || null,
-              prenom: document.getElementById("athlete_prenom_pere").value.trim() || null
-            },
-            mere: {
-              nom: document.getElementById("athlete_nom_mere").value.trim().toUpperCase() || null,
-              prenom: document.getElementById("athlete_prenom_mere").value.trim() || null
-            }
-          },
-          association: {
-            nom: "AS FINANCES",
-            section: "Athlétisme U15"
-          },
-          generated: {
-            timestamp: now.toISOString(),
-            date: now.toLocaleDateString('fr-FR'),
-            time: now.toLocaleTimeString('fr-FR')
-          }
+      // Récupération des infos
+      let profileData = {};
+      if (typeAthlete.checked) {
+        profileData = {
+          type: "athlete",
+          id: document.getElementById("athlete_id").value,
+          nom: document.getElementById("athlete_nom").value,
+          prenom: document.getElementById("athlete_prenom").value,
+          naissance: document.getElementById("athlete_naissance").value,
         };
-
-        // Nettoyage des données parents vides
-        if (!data.parents.pere.nom && !data.parents.pere.prenom) {
-          data.parents.pere = null;
-        }
-        if (!data.parents.mere.nom && !data.parents.mere.prenom) {
-          data.parents.mere = null;
-        }
-        if (!data.parents.pere && !data.parents.mere) {
-          delete data.parents;
-        }
-
-      } else if (currentProfileType === 'entraineur') {
-        // Validation des champs obligatoires pour entraineur
-        requiredFields = ['recruteur_id', 'recruteur_nom', 'recruteur_prenom', 'recruteur_email', 'recruteur_telephone', 'recruteur_fonction'];
-
-        data = {
-          type: 'entraineur',
-          entraineur: {
-            id: document.getElementById("recruteur_id").value.trim().toUpperCase(),
-            nom: document.getElementById("recruteur_nom").value.trim().toUpperCase(),
-            prenom: document.getElementById("recruteur_prenom").value.trim(),
-            email: document.getElementById("recruteur_email").value.trim().toLowerCase(),
-            telephone: document.getElementById("recruteur_telephone").value.trim(),
-            fonction: document.getElementById("recruteur_fonction").value.trim()
-          },
-          association: {
-            nom: "AS FINANCES",
-            section: "Athlétisme U15"
-          },
-          generated: {
-            timestamp: now.toISOString(),
-            date: now.toLocaleDateString('fr-FR'),
-            time: now.toLocaleTimeString('fr-FR')
-          }
+      } else if (typeEntraineur.checked) {
+        profileData = {
+          type: "entraineur",
+          id: document.getElementById("recruteur_id").value,
+          nom: document.getElementById("recruteur_nom").value,
+          prenom: document.getElementById("recruteur_prenom").value,
+          email: document.getElementById("recruteur_email").value,
         };
       }
 
-      // Validation des champs obligatoires
-      let isValid = true;
-      let firstInvalidField = null;
+      // Génération du QR code
+      const qrSection = document.getElementById("qr-section");
+      qrSection.classList.remove("hidden");
 
-      requiredFields.forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        if (!field.value.trim()) {
-          field.classList.add('border-red-300', 'bg-red-50');
-          field.classList.remove('border-slate-200');
-          if (!firstInvalidField) firstInvalidField = field;
-          isValid = false;
-        } else {
-          field.classList.remove('border-red-300', 'bg-red-50');
-          field.classList.add('border-slate-200');
-        }
+      const qrCanvas = document.getElementById("qr-canvas");
+      QRCode.toCanvas(qrCanvas, JSON.stringify(profileData), { width: 200 }, (err) => {
+        if (err) console.error(err);
       });
 
-      if (!isValid) {
-        firstInvalidField.focus();
-        alert('Veuillez remplir tous les champs obligatoires');
-        return;
+      // Horodatage
+      document.getElementById("qr-timestamp").textContent =
+        "Généré le " + new Date().toLocaleString("fr-FR");
+
+      // Récupération images
+      let athleteImg = document.getElementById("preview-img").src || "";
+      let recruteurImg = document.getElementById("recruteur-img").src || "";
+
+      // Remplir la carte
+      // Déterminer la photo selon le type
+      let photoSrc = "";
+      if (typeAthlete.checked) {
+        photoSrc = document.getElementById("preview-img").src || "";
+      } else if (typeEntraineur.checked) {
+        photoSrc = document.getElementById("recruteur-img").src || "";
       }
 
-      currentData = data;
-      const jsonString = JSON.stringify(data, null, 2);
+      // Remplir la carte
+      showMembershipCard(profileData, photoSrc);
 
-      // Options QR Code
-      const options = {
-        width: 280,
-        height: 280,
-        margin: 3,
-        color: {
-          dark: '#374151',
-          light: '#FFFFFF'
-        },
-        errorCorrectionLevel: 'M'
-      };
 
-      qrCanvas.innerHTML = "";
-      QRCode.toCanvas(qrCanvas, jsonString, options, function (error) {
-        if (error) {
-          console.error(error);
-          alert('Erreur lors de la génération du QR Code. Veuillez réessayer.');
-        } else {
-          timestampElement.textContent = `Généré le ${data.generated.date} à ${data.generated.time}`;
-          qrSection.classList.remove("hidden");
-          qrSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-          // Générer le QR code pour la carte aussi
-          generateCardQR(jsonString);
-          updateMembershipCard(data);
-
-          console.log("Données encodées dans le QR Code:", data);
-        }
-      });
     });
 
-    function generateCardQR(jsonString) {
-      const cardOptions = {
-        width: 50,
-        height: 50,
-        margin: 1,
-        color: {
-          dark: '#000000',
-          light: '#FFFFFF'
-        },
-        errorCorrectionLevel: 'M'
-      };
-
-      QRCode.toCanvas(cardQrCanvas, jsonString, cardOptions, function (error) {
-        if (error) {
-          console.error("Erreur génération QR carte:", error);
-        }
-      });
-    }
-
-    function updateMembershipCard(data) {
-      const cardNameElement = document.getElementById('card-name');
-      const cardIdElement = document.getElementById('card-id-text');
-      const cardTypeElement = document.getElementById('card-type-text');
-
-      if (data.type === 'athlete') {
-        cardNameElement.textContent = `${data.athlete.prenom} ${data.athlete.nom}`;
-        cardIdElement.textContent = `ID: ${data.athlete.id}`;
-        cardTypeElement.textContent = 'ATHLÈTE';
-      } else if (data.type === 'entraineur') {
-        cardNameElement.textContent = `${data.entraineur.prenom} ${data.entraineur.nom}`;
-        cardIdElement.textContent = `ID: ${data.entraineur.id}`;
-        cardTypeElement.textContent = 'ENTRAINEUR';
-      }
-    }
-
+    // Télécharger QR
     function downloadQR() {
-      const canvas = qrCanvas;
-      const link = document.createElement('a');
-      let fileName;
-
-      if (currentProfileType === 'athlete') {
-        const nom = document.getElementById("athlete_nom").value.trim();
-        const prenom = document.getElementById("athlete_prenom").value.trim();
-        const id = document.getElementById("athlete_id").value.trim();
-        fileName = `QR-ATHLETE-${nom.replace(/\s+/g, '')}-${prenom.replace(/\s+/g, '')}-${id}`.toUpperCase();
-      } else if (currentProfileType === 'entraineur') {
-        const nom = document.getElementById("recruteur_nom").value.trim();
-        const prenom = document.getElementById("recruteur_prenom").value.trim();
-        const id = document.getElementById("recruteur_id").value.trim();
-        fileName = `QR-ENTRAINEUR-${nom.replace(/\s+/g, '')}-${prenom.replace(/\s+/g, '')}-${id}`.toUpperCase();
-      }
-
-      link.download = `${fileName}.png`;
-      link.href = canvas.toDataURL("image/png", 1.0);
+      const canvas = document.getElementById("qr-canvas");
+      const link = document.createElement("a");
+      link.download = "qr-code.png";
+      link.href = canvas.toDataURL();
       link.click();
     }
 
+    // Télécharger carte (version simple)
     function downloadMembershipCard() {
-      if (!currentData) {
-        alert('Aucune donnée disponible pour générer la carte');
-        return;
-      }
+      alert("Téléchargement de la carte à implémenter (ex: via html2canvas)");
+    }
 
-      // Créer un canvas pour capturer la carte
-      const card = document.getElementById('membership-card');
-      const cardContainer = document.getElementById('membership-card-container');
+    window.downloadQR = downloadQR;
+    window.downloadMembershipCard = downloadMembershipCard;
 
-      // Temporairement afficher la carte pour la capturer
-      cardContainer.style.position = 'fixed';
-      cardContainer.style.left = '0';
-      cardContainer.style.top = '0';
-      cardContainer.style.zIndex = '-1';
+    function showMembershipCard(data, photoSrc) {
+      const card = document.getElementById("membership-card");
+      const cardInfo = document.getElementById("card-info");
+      const cardPhoto = document.getElementById("card-photo");
+      const cardRole = document.getElementById("card-role");
+      const cardBg = document.getElementById("card-bg");
 
-      // Utiliser html2canvas ou une méthode alternative
-      // Ici, nous allons créer un canvas manuellement
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-
-      // Dimensions de la carte
-      canvas.width = 700; // 350px * 2 pour meilleure qualité
-      canvas.height = 440; // 220px * 2
-
-      // Dessiner le background gradient
-      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      gradient.addColorStop(0, '#1e40af');
-      gradient.addColorStop(0.5, '#3b82f6');
-      gradient.addColorStop(1, '#60a5fa');
-
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Arrondir les coins
-      ctx.globalCompositeOperation = 'destination-in';
-      ctx.beginPath();
-      ctx.roundRect(0, 0, canvas.width, canvas.height, 30);
-      ctx.fill();
-      ctx.globalCompositeOperation = 'source-over';
-
-      // Dessiner le logo
-      ctx.fillStyle = 'rgba(255,255,255,0.2)';
-      ctx.beginPath();
-      ctx.roundRect(40, 40, 100, 100, 20);
-      ctx.fill();
-
-      ctx.fillStyle = 'white';
-      ctx.font = 'bold 32px Inter';
-      ctx.textAlign = 'center';
-      ctx.fillText('AS', 90, 105);
-
-      // Type de carte
-      ctx.font = 'bold 24px Inter';
-      ctx.textAlign = 'right';
-      ctx.fillStyle = 'rgba(255,255,255,0.9)';
-      const cardType = currentData.type === 'athlete' ? 'ATHLÈTE' : 'ENTRAINEUR';
-      ctx.fillText(cardType, canvas.width - 40, 70);
-
-      // Nom
-      ctx.font = 'bold 36px Inter';
-      ctx.textAlign = 'left';
-      ctx.fillStyle = 'white';
-      let fullName;
-      if (currentData.type === 'athlete') {
-        fullName = `${currentData.athlete.prenom} ${currentData.athlete.nom}`;
+      // Photo + rôle
+      if (photoSrc) cardPhoto.src = photoSrc;
+      if (data.type === "athlete") {
+        cardRole.textContent = "Athlète";
+        cardBg.className = "absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800";
       } else {
-        fullName = `${currentData.entraineur.prenom} ${currentData.entraineur.nom}`;
+        cardRole.textContent = "Entraîneur";
+        cardBg.className = "absolute inset-0 bg-gradient-to-br from-green-600 to-green-800";
       }
-      ctx.fillText(fullName.toUpperCase(), 40, 200);
 
-      // ID
-      ctx.font = '28px Inter';
-      ctx.fillStyle = 'rgba(255,255,255,0.9)';
-      const id = currentData.type === 'athlete' ? currentData.athlete.id : currentData.entraineur.id;
-      ctx.fillText(`ID: ${id}`, 40, 240);
+      // Infos
+      cardInfo.innerHTML = `
+    <p><strong>ID :</strong> ${data.id || "-"}</p>
+    <p><strong>Nom :</strong> ${data.nom || "-"}</p>
+    <p><strong>Prénom :</strong> ${data.prenom || "-"}</p>
+    ${data.naissance ? `<p><strong>Naissance :</strong> ${data.naissance}</p>` : ""}
+    ${data.email ? `<p><strong>Email :</strong> ${data.email}</p>` : ""}
+  `;
 
-      // Association
-      ctx.font = 'bold 22px Inter';
-      ctx.fillStyle = 'rgba(255,255,255,0.8)';
-      ctx.fillText('AS FINANCES', 40, canvas.height - 60);
-      ctx.font = '22px Inter';
-      ctx.fillText('Section Athlétisme U15', 40, canvas.height - 30);
+      // QR dans la carte
+      QRCode.toCanvas(document.getElementById("card-qr"), JSON.stringify(data), { width: 64 });
 
-      // QR Code (récupérer depuis le canvas existant)
-      const qrData = cardQrCanvas.toDataURL();
-      const qrImage = new Image();
-      qrImage.onload = function () {
-        ctx.drawImage(qrImage, canvas.width - 140, canvas.height - 140, 100, 100);
-
-        // Télécharger l'image
-        const link = document.createElement('a');
-        let fileName;
-        if (currentData.type === 'athlete') {
-          fileName = `CARTE-ATHLETE-${currentData.athlete.nom.replace(/\s+/g, '')}-${currentData.athlete.prenom.replace(/\s+/g, '')}-${currentData.athlete.id}`;
-        } else {
-          fileName = `CARTE-ENTRAINEUR-${currentData.entraineur.nom.replace(/\s+/g, '')}-${currentData.entraineur.prenom.replace(/\s+/g, '')}-${currentData.entraineur.id}`;
-        }
-
-        link.download = `${fileName}.png`;
-        link.href = canvas.toDataURL('image/png', 1.0);
-        link.click();
-
-        // Remettre la carte hors écran
-        cardContainer.style.position = 'absolute';
-        cardContainer.style.left = '-9999px';
-      };
-      qrImage.src = qrData;
+      // Affiche la carte
+      card.classList.remove("hidden");
     }
 
-    function resetForm() {
-      form.reset();
-      qrSection.classList.add("hidden");
-      currentProfileType = null;
-      currentData = null;
 
-      // Reset radio cards
-      radioCards.forEach(card => card.classList.remove('selected'));
-
-      // Hide all forms
-      document.getElementById('athlete-form').classList.add('hidden');
-      document.getElementById('entraineur-form').classList.add('hidden');
-
-      // Reset field styles
-      document.querySelectorAll('.form-input').forEach(input => {
-        input.classList.remove('border-red-300', 'bg-red-50');
-        input.classList.add('border-slate-200');
-      });
-
-      // Disable submit button
-      submitBtn.disabled = true;
-      submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Formatage automatique des champs - Athlète
-    document.getElementById("athlete_id").addEventListener('input', function (e) {
-      this.value = this.value.toUpperCase();
-    });
-
-    document.getElementById("athlete_nom").addEventListener('input', function (e) {
-      this.value = this.value.toUpperCase();
-    });
-
-    document.getElementById("athlete_prenom").addEventListener('input', function (e) {
-      const value = this.value;
-      this.value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-    });
-
-    document.getElementById("athlete_nom_pere").addEventListener('input', function (e) {
-      this.value = this.value.toUpperCase();
-    });
-
-    document.getElementById("athlete_nom_mere").addEventListener('input', function (e) {
-      this.value = this.value.toUpperCase();
-    });
-
-    document.getElementById("athlete_prenom_pere").addEventListener('input', function (e) {
-      const value = this.value;
-      this.value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-    });
-
-    document.getElementById("athlete_prenom_mere").addEventListener('input', function (e) {
-      const value = this.value;
-      this.value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-    });
-
-    // Formatage automatique des champs - entraineur
-    document.getElementById("recruteur_id").addEventListener('input', function (e) {
-      this.value = this.value.toUpperCase();
-    });
-
-    document.getElementById("recruteur_nom").addEventListener('input', function (e) {
-      this.value = this.value.toUpperCase();
-    });
-
-    document.getElementById("recruteur_prenom").addEventListener('input', function (e) {
-      const value = this.value;
-      this.value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-    });
-
-    document.getElementById("recruteur_email").addEventListener('input', function (e) {
-      this.value = this.value.toLowerCase();
-    });
-
-    // Fonction pour arrondir les rectangles (polyfill)
-    if (!CanvasRenderingContext2D.prototype.roundRect) {
-      CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius) {
-        this.beginPath();
-        this.moveTo(x + radius, y);
-        this.lineTo(x + width - radius, y);
-        this.quadraticCurveTo(x + width, y, x + width, y + radius);
-        this.lineTo(x + width, y + height - radius);
-        this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-        this.lineTo(x + radius, y + height);
-        this.quadraticCurveTo(x, y + height, x, y + height - radius);
-        this.lineTo(x, y + radius);
-        this.quadraticCurveTo(x, y, x + radius, y);
-        this.closePath();
-      };
+    // Télécharger la carte en image
+    async function downloadMembershipCard() {
+      const card = document.getElementById("membership-card");
+      const canvas = await html2canvas(card, { scale: 2 });
+      const link = document.createElement("a");
+      link.download = "carte-adhesion.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
     }
   </script>
+
 
 </body>
 

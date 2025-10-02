@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fiche d'engagement - AS Finances</title>
+    <title>Fiche d'engagement Parent - AS Finances</title>
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -168,7 +168,7 @@
                     Générateur de QR Code
                 </a>
                 <a href="fiche-engagement.html" class="text-xl text-blue-500 font-semibold mb-3">
-                    Fiche d'engagement
+                    Fiche d'engagement Parent
                 </a>
             </div>
 
@@ -181,54 +181,76 @@
         <!-- Formulaire -->
         <div id="formulaire">
             <form id="engagementForm" class="space-y-8">
-                <!-- Informations personnelles -->
+                <!-- Informations du parent -->
                 <div class="space-y-4">
                     <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
                         <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
-                        <span>Informations de l'entraîneur</span>
+                        <span>Informations du Parent/Tuteur</span>
                     </h2>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="space-y-2">
-                            <label for="nom" class="block text-sm font-medium text-slate-700">Nom et prénoms</label>
-                            <input type="text" id="nom" placeholder="Ex: AWO Jean-Baptiste" required
+                            <label for="nomParent" class="block text-sm font-medium text-slate-700">Nom et prénoms du parent</label>
+                            <input type="text" id="nomParent" placeholder="Ex: DJOSSOU Marie-Claire" required
                                 class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                         </div>
 
                         <div class="space-y-2">
-                            <label for="naissance" class="block text-sm font-medium text-slate-700">Date de
-                                naissance</label>
-                            <input type="date" id="naissance" required
+                            <label for="naissanceParent" class="block text-sm font-medium text-slate-700">Date de naissance</label>
+                            <input type="date" id="naissanceParent" required
                                 class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                         </div>
                     </div>
                 </div>
 
-                <!-- Informations d'identité -->
+                <!-- Informations d'identité du parent -->
                 <div class="space-y-4">
                     <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
                         <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        <span>Pièce d'identité</span>
+                        <span>Pièce d'identité du Parent</span>
                     </h2>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="space-y-2">
-                            <label for="carte" class="block text-sm font-medium text-slate-700">Numéro de carte
-                                d'identité</label>
-                            <input type="text" id="carte" placeholder="Ex: 123456789012" required
+                            <label for="carteParent" class="block text-sm font-medium text-slate-700">Numéro de carte d'identité</label>
+                            <input type="text" id="carteParent" placeholder="Ex: 123456789012" required
                                 class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                         </div>
 
                         <div class="space-y-2">
-                            <label for="expiration" class="block text-sm font-medium text-slate-700">Date
-                                d'expiration</label>
-                            <input type="date" id="expiration" required
+                            <label for="expirationParent" class="block text-sm font-medium text-slate-700">Date d'expiration</label>
+                            <input type="date" id="expirationParent" required
+                                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informations de l'enfant -->
+                <div class="space-y-4">
+                    <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>Informations de l'Enfant</span>
+                    </h2>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label for="nomEnfant" class="block text-sm font-medium text-slate-700">Nom et prénoms de l'enfant</label>
+                            <input type="text" id="nomEnfant" placeholder="Ex: DJOSSOU Junior" required
+                                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="naissanceEnfant" class="block text-sm font-medium text-slate-700">Date de naissance</label>
+                            <input type="date" id="naissanceEnfant" required
                                 class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                         </div>
                     </div>
@@ -273,7 +295,7 @@
                     <!-- Signature et date -->
                     <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="text-center">
-                            <p class="text-sm font-medium text-slate-600 mb-8">Signature de l'entraîneur</p>
+                            <p class="text-sm font-medium text-slate-600 mb-8">Signature du parent/tuteur</p>
                             <div class="border-b-2 border-slate-300 w-32 mx-auto"></div>
                         </div>
                         <div class="text-center">
@@ -317,7 +339,7 @@
             e.preventDefault();
 
             // Validation des champs obligatoires
-            const requiredFields = ['nom', 'naissance', 'carte', 'expiration'];
+            const requiredFields = ['nomParent', 'naissanceParent', 'carteParent', 'expirationParent', 'nomEnfant', 'naissanceEnfant'];
             let isValid = true;
             let firstInvalidField = null;
 
@@ -340,33 +362,39 @@
                 return;
             }
 
-            const nom = document.getElementById('nom').value.trim();
-            const naissance = new Date(document.getElementById('naissance').value).toLocaleDateString('fr-FR');
-            const carte = document.getElementById('carte').value.trim();
-            const expiration = new Date(document.getElementById('expiration').value).toLocaleDateString('fr-FR');
+            const nomParent = document.getElementById('nomParent').value.trim();
+            const naissanceParent = new Date(document.getElementById('naissanceParent').value).toLocaleDateString('fr-FR');
+            const carteParent = document.getElementById('carteParent').value.trim();
+            const expirationParent = new Date(document.getElementById('expirationParent').value).toLocaleDateString('fr-FR');
+            const nomEnfant = document.getElementById('nomEnfant').value.trim();
+            const naissanceEnfant = new Date(document.getElementById('naissanceEnfant').value).toLocaleDateString('fr-FR');
             const aujourdhui = new Date().toLocaleDateString('fr-FR');
 
             const ficheContent = `
                 <p class="text-base leading-relaxed">
-                    Je soussigné, <strong class="uppercase" >${nom}</strong>, né(e) le <strong>${naissance}</strong>, 
-                    numéro de carte d'identité <strong>${carte}</strong> expirant le <strong>${expiration}</strong>, 
-                    m'engage à entraîner les athlètes de l'Association Sportive des Finances.
+                    Je soussigné(e), <strong class="uppercase">${nomParent}</strong>, né(e) le <strong>${naissanceParent}</strong>, 
+                    numéro de carte d'identité <strong>${carteParent}</strong> expirant le <strong>${expirationParent}</strong>, 
+                    en ma qualité de parent/tuteur légal de <strong class="uppercase">${nomEnfant}</strong>, 
+                    né(e) le <strong>${naissanceEnfant}</strong>, autorise et m'engage à ce que mon enfant 
+                    participe aux activités de l'Association Sportive des Finances, section Athlétisme U15.
                 </p>
 
-                <p class="text-base font-medium text-slate-700 mt-6 mb-4">À ce titre, je m'engage :</p>
+                <p class="text-base font-medium text-slate-700 mt-6 mb-4">À ce titre, je m'engage à :</p>
 
                 <ul class="list-disc list-inside space-y-2 text-base text-slate-700 ml-4">
-                    <li>à entraîner avec assiduité les athlètes de l'association ;</li>
-                    <li>à respecter et faire respecter les textes de l'association ;</li>
-                    <li>à ne détourner aucun athlète de l'association à toute fin ;</li>
-                    <li>à prendre soin de toute dotation en matériel venant de l'association ;</li>
-                    <li>à respecter avec rigueur les consignes venant des dirigeants de l'association.</li>
-                    <li>à respecter les règles d'éthique, de morale de l'association.</li>
-                    <li>à respecter les règles de protection des enfants mineures, surtout fille en république du Bénin.</li>
+                    <li>assurer la présence régulière et assidue de mon enfant aux entraînements ;</li>
+                    <li>respecter et faire respecter par mon enfant les textes et règlements de l'association ;</li>
+                    <li>veiller à ce que mon enfant respecte les consignes des entraîneurs et dirigeants ;</li>
+                    <li>m'assurer que mon enfant prenne soin de toute dotation en matériel fournie par l'association ;</li>
+                    <li>soutenir les valeurs d'éthique et de morale promues par l'association ;</li>
+                    <li>contribuer positivement au développement sportif et personnel de mon enfant au sein de l'association ;</li>
+                    <li>informer l'association de tout problème de santé ou toute situation particulière concernant mon enfant.</li>
                 </ul>
 
                 <p class="text-base leading-relaxed mt-6 font-medium">
-                    Le présent m'engage face aux textes de l'Association Sportive des Finances.
+                    Je reconnais avoir pris connaissance des règlements de l'Association Sportive des Finances 
+                    et m'engage à les respecter. Le présent engagement est fait en toute connaissance de cause 
+                    pour le bien-être et l'épanouissement sportif de mon enfant.
                 </p>
             `;
 
@@ -386,19 +414,23 @@
                 input.classList.add('border-slate-200');
             });
 
-            document.getElementById('nom').focus();
+            document.getElementById('nomParent').focus();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Auto-focus et amélioration UX
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('nom').focus();
+            document.getElementById('nomParent').focus();
         });
 
-        // Formatage automatique du nom
-        document.getElementById('nom').addEventListener('input', function (e) {
+        // Formatage automatique des noms
+        document.getElementById('nomParent').addEventListener('input', function (e) {
             const value = this.value;
-            // Capitalise chaque mot
+            this.value = value.replace(/\b\w/g, l => l.toUpperCase());
+        });
+
+        document.getElementById('nomEnfant').addEventListener('input', function (e) {
+            const value = this.value;
             this.value = value.replace(/\b\w/g, l => l.toUpperCase());
         });
 
