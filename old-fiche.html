@@ -158,6 +158,7 @@
 <body class="min-h-screen flex items-center justify-center p-4 bg-gray-50">
 
     <div class="bg-white card-shadow rounded-2xl p-8 lg:p-12 w-full max-w-4xl">
+        <!-- Header Section -->
         <div class="text-center mb-10" id="entete">
             <div class="logo-circle w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
                 <img src="logo.PNG" alt="Logo AS FINANCES" class="w-20 h-20">
@@ -178,7 +179,9 @@
             <div class="divider"></div>
         </div>
 
+        <!-- Formulaire -->
         <div id="formulaire">
+            <!-- Tabs pour choisir le type de profil -->
             <div class="flex gap-3 mb-8 p-1 bg-gray-100 rounded-lg">
                 <button type="button" onclick="switchTab('parent')" id="tabParent"
                     class="tab-button active flex-1 py-3 px-6 rounded-md font-medium text-sm">
@@ -191,49 +194,41 @@
             </div>
 
             <form id="engagementForm" class="space-y-8">
+                <!-- Formulaire Parent/Tuteur -->
                 <div id="formParent" class="space-y-8">
+                    <!-- Informations du parent -->
                     <div class="space-y-4">
                         <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
                             <span>Informations du Parent/Tuteur</span>
                         </h2>
 
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
                             <div class="space-y-2">
                                 <label for="nomParent" class="block text-sm font-medium text-slate-700">Nom et
                                     prénoms</label>
-                                <input type="text" id="nomParent" name="nomParent" placeholder="Ex: DJOSSOU Marie-Claire"
-                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
-                            </div>
-                            <div class="space-y-2">
-                                <label for="naissanceParent" class="block text-sm font-medium text-slate-700">Date de
-                                    naissance du parent</label>
-                                <input type="date" id="naissanceParent" name="naissanceParent"
+                                <input type="text" id="nomParent" placeholder="Ex: DJOSSOU Marie-Claire"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
                         </div>
                     </div>
 
+                    <!-- Informations d'identité du parent -->
                     <div class="space-y-4">
                         <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
                             <span>Pièce d'identité</span>
                         </h2>
 
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
                             <div class="space-y-2">
                                 <label for="carteParent" class="block text-sm font-medium text-slate-700">Numéro de
                                     carte d'identité</label>
-                                <input type="text" id="carteParent" name="carteParent" placeholder="Ex: 123456789012"
-                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
-                            </div>
-                            <div class="space-y-2">
-                                <label for="expirationCarteParent" class="block text-sm font-medium text-slate-700">Date
-                                    d'expiration de la carte</label>
-                                <input type="date" id="expirationCarteParent" name="expirationCarteParent"
+                                <input type="text" id="carteParent" placeholder="Ex: 123456789012"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
                         </div>
                     </div>
 
+                    <!-- Informations de l'enfant -->
                     <div class="space-y-4">
                         <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
                             <span>Informations de l'Enfant</span>
@@ -243,21 +238,23 @@
                             <div class="space-y-2">
                                 <label for="nomEnfant" class="block text-sm font-medium text-slate-700">Nom et
                                     prénoms</label>
-                                <input type="text" id="nomEnfant" name="nomEnfant" placeholder="Ex: DJOSSOU Junior"
+                                <input type="text" id="nomEnfant" placeholder="Ex: DJOSSOU Junior"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
 
                             <div class="space-y-2">
                                 <label for="naissanceEnfant" class="block text-sm font-medium text-slate-700">Date de
                                     naissance</label>
-                                <input type="date" id="naissanceEnfant" name="naissanceEnfant"
+                                <input type="date" id="naissanceEnfant"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Formulaire entraineur -->
                 <div id="formEntraineur" class="space-y-8 hidden">
+                    <!-- Informations du entraineur -->
                     <div class="space-y-4">
                         <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
                             <span>Informations de l'entraineur</span>
@@ -267,16 +264,14 @@
                             <div class="space-y-2">
                                 <label for="nomEntraineur" class="block text-sm font-medium text-slate-700">Nom et
                                     prénoms</label>
-                                <input type="text" id="nomEntraineur" name="nomEntraineur"
-                                    placeholder="Ex: KOSSOU Jean-Pierre"
+                                <input type="text" id="nomEntraineur" placeholder="Ex: KOSSOU Jean-Pierre"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
 
                             <div class="space-y-2">
                                 <label for="fonctionEntraineur"
                                     class="block text-sm font-medium text-slate-700">Fonction</label>
-                                <input type="text" id="fonctionEntraineur" name="fonctionEntraineur"
-                                    placeholder="Ex: Entraîneur Principal"
+                                <input type="text" id="fonctionEntraineur" placeholder="Ex: Entraîneur Principal"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
                         </div>
@@ -285,72 +280,27 @@
                             <div class="space-y-2">
                                 <label for="telephoneEntraineur"
                                     class="block text-sm font-medium text-slate-700">Téléphone</label>
-                                <input type="tel" id="telephoneEntraineur" name="telephoneEntraineur"
-                                    placeholder="Ex: +229 97 00 00 00"
+                                <input type="tel" id="telephoneEntraineur" placeholder="Ex: +229 97 00 00 00"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
 
                             <div class="space-y-2">
                                 <label for="emailEntraineur"
                                     class="block text-sm font-medium text-slate-700">Email</label>
-                                <input type="email" id="emailEntraineur" name="emailEntraineur"
-                                    placeholder="Ex: entraineur@asfinances.bj"
+                                <input type="email" id="emailEntraineur" placeholder="Ex: entraineur@asfinances.bj"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
                         </div>
                     </div>
 
+                    <!-- Informations de l'athlète recruté -->
                     <div class="space-y-4">
                         <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
                             <span>Liste des Athlètes à Superviser</span>
                         </h2>
 
                         <div id="athletesContainer" class="space-y-6 border p-4 sm:p-6 rounded-xl bg-gray-50">
-                            <div class="athlete-field space-y-4 p-4 border rounded-lg bg-white shadow-sm"
-                                data-athlete-index="0">
-                                <h3 class="text-sm font-semibold text-slate-600">Athlète #1</h3>
-                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                    <div class="space-y-2">
-                                        <label for="nomAthlete-0"
-                                            class="block text-xs font-medium text-slate-700">Nom et
-                                            prénoms</label>
-                                        <input type="text" id="nomAthlete-0" name="nomAthlete[]"
-                                            placeholder="Ex: DJOSSOU Junior"
-                                            class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-900" />
-                                    </div>
-                                    <div class="space-y-2">
-                                        <label for="naissanceAthlete-0"
-                                            class="block text-xs font-medium text-slate-700">Date de
-                                            naissance</label>
-                                        <input type="date" id="naissanceAthlete-0" name="naissanceAthlete[]"
-                                            class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-900" />
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                    <div class="space-y-2">
-                                        <label for="specialite-0"
-                                            class="block text-xs font-medium text-slate-700">Spécialité</label>
-                                        <input type="text" id="specialite-0" name="specialite[]"
-                                            placeholder="Ex: 100m, Longueur"
-                                            class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-900" />
-                                    </div>
-                                    <div class="space-y-2">
-                                        <label for="niveau-0"
-                                            class="block text-xs font-medium text-slate-700">Niveau</label>
-                                        <select id="niveau-0" name="niveau[]"
-                                            class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-900">
-                                            <option value="">Sélectionner</option>
-                                            <option value="Débutant">Débutant</option>
-                                            <option value="Intermédiaire">Intermédiaire</option>
-                                            <option value="Confirmé">Confirmé</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button type="button" onclick="removeAthleteField(this)"
-                                    class="text-red-500 hover:text-red-700 text-xs font-medium mt-2 hidden">Supprimer
-                                    l'athlète</button>
-                            </div>
-                            </div>
+                        </div>
 
                         <button type="button" onclick="addAthleteField()"
                             class="btn-secondary w-full bg-white hover:bg-gray-50 text-slate-600 border px-6 py-3 rounded-lg font-medium flex items-center justify-center space-x-2 mt-4">
@@ -363,6 +313,7 @@
                     </div>
                 </div>
 
+                <!-- Submit Button -->
                 <div class="pt-6">
                     <button type="submit" class="btn-primary w-full text-white py-4 text-base font-medium rounded-lg">
                         <span class="flex items-center justify-center space-x-3">
@@ -377,6 +328,7 @@
             </form>
         </div>
 
+        <!-- Fiche d'engagement générée -->
         <div id="fiche-engagement" class="mt-12 hidden fade-in">
             <div class="divider"></div>
 
@@ -388,12 +340,14 @@
                 </div>
 
                 <div class="fiche-container p-8">
+                    <!-- Header pour impression -->
                     <div class="print-header hidden">
                         <img src="img1.PNG" alt="Banniere" class="w-full h-24">
                     </div>
 
                     <div id="ficheText" class="text-slate-800 leading-relaxed text-justify space-y-4"></div>
 
+                    <!-- Signature et date -->
                     <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="text-center">
                             <p class="text-sm font-medium text-slate-600 mb-8" id="signatureLabel">Signature</p>
@@ -406,6 +360,7 @@
                     </div>
                 </div>
 
+                <!-- Action Buttons -->
                 <div class="flex flex-col sm:flex-row justify-center gap-3 pt-4 no-print">
                     <button onclick="window.print()"
                         class="btn-secondary bg-white hover:bg-gray-50 text-slate-700 border px-6 py-3 rounded-lg font-medium flex items-center justify-center space-x-2">
@@ -436,23 +391,6 @@
         const ficheText = document.getElementById('ficheText');
         const dateGeneration = document.getElementById('dateGeneration');
         const signatureLabel = document.getElementById('signatureLabel');
-        const athletesContainer = document.getElementById('athletesContainer');
-        let athleteCount = 0; // Utiliser un compteur global pour les IDs uniques
-
-        // Initialisation du premier champ athlète au chargement
-        document.addEventListener('DOMContentLoaded', () => {
-            // S'assurer qu'il y a au moins un athlète dans le formulaire entraîneur
-            if (athletesContainer.children.length === 0) {
-                // S'assurer que le premier athlète est présent (initialisé dans le HTML)
-                // Comme il est déjà dans le HTML, on initialise juste le compteur s'il y a des enfants.
-                athleteCount = athletesContainer.children.length > 0 ? athletesContainer.children.length - 1 : 0;
-            } else {
-                // Mettre à jour les boutons si le champ par défaut est là
-                updateAthleteRemoveButtons();
-                athleteCount = athletesContainer.children.length - 1;
-            }
-            document.getElementById('nomParent').focus();
-        });
 
         function switchTab(tab) {
             currentTab = tab;
@@ -475,102 +413,7 @@
 
             ficheContainer.classList.add('hidden');
             form.reset();
-            // Réinitialiser les styles d'erreur
-            document.querySelectorAll('.form-input').forEach(input => {
-                input.classList.remove('border-red-300', 'bg-red-50');
-                input.classList.add('border-slate-200');
-            });
         }
-
-        /**
-         * Ajoute un nouveau bloc de champs pour un athlète dans le formulaire Entraineur.
-         */
-        function addAthleteField() {
-            athleteCount++;
-            const newIndex = athleteCount; // Index pour les nouveaux champs
-
-            const newAthleteDiv = document.createElement('div');
-            newAthleteDiv.classList.add('athlete-field', 'space-y-4', 'p-4', 'border', 'rounded-lg', 'bg-white', 'shadow-sm', 'fade-in');
-            newAthleteDiv.setAttribute('data-athlete-index', newIndex);
-            newAthleteDiv.innerHTML = `
-                <h3 class="text-sm font-semibold text-slate-600">Athlète #${newIndex + 1}</h3>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div class="space-y-2">
-                        <label for="nomAthlete-${newIndex}" class="block text-xs font-medium text-slate-700">Nom et prénoms</label>
-                        <input type="text" id="nomAthlete-${newIndex}" name="nomAthlete[]" placeholder="Ex: DJOSSOU Junior"
-                            class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-900" />
-                    </div>
-                    <div class="space-y-2">
-                        <label for="naissanceAthlete-${newIndex}" class="block text-xs font-medium text-slate-700">Date de naissance</label>
-                        <input type="date" id="naissanceAthlete-${newIndex}" name="naissanceAthlete[]"
-                            class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-900" />
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div class="space-y-2">
-                        <label for="specialite-${newIndex}" class="block text-xs font-medium text-slate-700">Spécialité</label>
-                        <input type="text" id="specialite-${newIndex}" name="specialite[]" placeholder="Ex: 100m, Longueur"
-                            class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-900" />
-                    </div>
-                    <div class="space-y-2">
-                        <label for="niveau-${newIndex}" class="block text-xs font-medium text-slate-700">Niveau</label>
-                        <select id="niveau-${newIndex}" name="niveau[]"
-                            class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-900">
-                            <option value="">Sélectionner</option>
-                            <option value="Débutant">Débutant</option>
-                            <option value="Intermédiaire">Intermédiaire</option>
-                            <option value="Confirmé">Confirmé</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="button" onclick="removeAthleteField(this)"
-                    class="text-red-500 hover:text-red-700 text-xs font-medium mt-2">Supprimer l'athlète</button>
-            `;
-
-            athletesContainer.appendChild(newAthleteDiv);
-            updateAthleteRemoveButtons();
-            
-            // Appliquer le formatage auto sur les nouveaux champs de nom
-            const newNameField = newAthleteDiv.querySelector(`input[name="nomAthlete[]"]`);
-            if (newNameField) {
-                newNameField.addEventListener('input', formatNameInput);
-            }
-        }
-
-        /**
-         * Supprime le bloc de champs d'un athlète.
-         * @param {HTMLElement} button Le bouton de suppression cliqué.
-         */
-        function removeAthleteField(button) {
-            const athleteDiv = button.closest('.athlete-field');
-            if (athleteDiv) {
-                athleteDiv.remove();
-                updateAthleteRemoveButtons();
-                // Rénuméroter les athlètes restants
-                document.querySelectorAll('.athlete-field').forEach((field, index) => {
-                    field.querySelector('h3').textContent = `Athlète #${index + 1}`;
-                });
-                athleteCount = document.querySelectorAll('.athlete-field').length - 1; // Ajuster le compteur
-            }
-        }
-
-        /**
-         * Met à jour la visibilité des boutons de suppression. 
-         * Le premier (seul) athlète ne peut pas être supprimé.
-         */
-        function updateAthleteRemoveButtons() {
-            const athleteFields = document.querySelectorAll('.athlete-field');
-            athleteFields.forEach((field, index) => {
-                const removeButton = field.querySelector('button[onclick*="removeAthleteField"]');
-                // Masquer le bouton de suppression pour le premier athlète (index 0) s'il est le seul
-                if (athleteFields.length > 1) {
-                    removeButton.classList.remove('hidden');
-                } else {
-                    removeButton.classList.add('hidden');
-                }
-            });
-        }
-
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -579,80 +422,43 @@
             let isValid = true;
             let firstInvalidField = null;
 
-            // Retirer les classes d'erreur précédentes
-            document.querySelectorAll('.form-input').forEach(input => {
-                input.classList.remove('border-red-300', 'bg-red-50');
-                input.classList.add('border-slate-200');
-            });
-
             if (currentTab === 'parent') {
-                // Champs requis pour le parent/tuteur
-                requiredFields = ['nomParent', 'carteParent', 'expirationCarteParent', 'nomEnfant', 'naissanceEnfant'];
+                requiredFields = ['nomParent', 'naissanceParent', 'carteParent', 'nomEnfant', 'naissanceEnfant'];
             } else {
-                // Champs requis pour l'entraîneur
-                requiredFields = ['nomEntraineur', 'fonctionEntraineur', 'telephoneEntraineur'];
-                
-                // Valider les champs dynamiques des athlètes
-                const athleteFields = document.querySelectorAll('#athletesContainer .athlete-field');
-                
-                athleteFields.forEach((field) => {
-                    const nom = field.querySelector(`input[name="nomAthlete[]"]`);
-                    const naissance = field.querySelector(`input[name="naissanceAthlete[]"]`);
-                    const specialite = field.querySelector(`input[name="specialite[]"]`);
-                    const niveau = field.querySelector(`select[name="niveau[]"]`);
-                    
-                    const athleteInputs = [nom, naissance, specialite, niveau];
-                    athleteInputs.forEach(input => {
-                        if (input && !input.value.trim()) {
-                            input.classList.add('border-red-300', 'bg-red-50');
-                            input.classList.remove('border-slate-200');
-                            if (!firstInvalidField) firstInvalidField = input;
-                            isValid = false;
-                        }
-                    });
-                });
+                requiredFields = ['nomEntraineur', 'fonctionEntraineur', 'telephoneEntraineur', 'nomAthlete', 'naissanceAthlete', 'specialite', 'niveau'];
             }
 
-            // Valider les champs statiques
             requiredFields.forEach(fieldId => {
                 const field = document.getElementById(fieldId);
-                if (field && !field.value.trim()) {
+                if (!field.value.trim()) {
                     field.classList.add('border-red-300', 'bg-red-50');
                     field.classList.remove('border-slate-200');
                     if (!firstInvalidField) firstInvalidField = field;
                     isValid = false;
+                } else {
+                    field.classList.remove('border-red-300', 'bg-red-50');
+                    field.classList.add('border-slate-200');
                 }
             });
 
             if (!isValid) {
-                if (firstInvalidField) {
-                    firstInvalidField.focus();
-                }
+                firstInvalidField.focus();
                 return;
             }
-
-            // --- Génération de la Fiche ---
 
             const aujourdhui = new Date().toLocaleDateString('fr-FR');
             let ficheContent = '';
 
             if (currentTab === 'parent') {
                 const nomParent = document.getElementById('nomParent').value.trim();
-                const dateNaissanceParentValue = document.getElementById('naissanceParent').value;
-                const naissanceParent = dateNaissanceParentValue ? new Date(dateNaissanceParentValue).toLocaleDateString('fr-FR') : 'Date non spécifiée';
                 const carteParent = document.getElementById('carteParent').value.trim();
-                const expirationCarteParentValue = document.getElementById('expirationCarteParent').value;
-                const expirationCarteParent = expirationCarteParentValue ? new Date(expirationCarteParentValue).toLocaleDateString('fr-FR') : 'Date non spécifiée';
                 const nomEnfant = document.getElementById('nomEnfant').value.trim();
-                const dateNaissanceEnfantValue = document.getElementById('naissanceEnfant').value;
-                const naissanceEnfant = dateNaissanceEnfantValue ? new Date(dateNaissanceEnfantValue).toLocaleDateString('fr-FR') : 'Date non spécifiée';
-
+                const naissanceEnfant = new Date(document.getElementById('naissanceEnfant').value).toLocaleDateString('fr-FR');
 
                 ficheContent = `
                     <p class="text-sm leading-relaxed">
                         Je soussigné(e), <strong class="uppercase">${nomParent}</strong>, 
-                        né(e) le <strong>${naissanceParent}</strong>, 
-                        titulaire de la carte d'identité numéro <strong>${carteParent}</strong> (expire le <strong>${expirationCarteParent}</strong>), 
+                        numéro de carte d'identité <strong>${carteParent}</strong>/strong>, 
                         en ma qualité de parent/tuteur légal de <strong class="uppercase">${nomEnfant}</strong>, 
                         né(e) le <strong>${naissanceEnfant}</strong>, autorise et m'engage à ce que mon enfant 
                         participe aux activités de l'Association Sportive des Finances, section Athlétisme U12.
@@ -661,14 +467,14 @@
                     <p class="text-sm font-medium text-slate-700 mt-6 mb-4">À ce titre, je m'engage à :</p>
 
                     <ul class="list-disc list-inside space-y-2 text-sm text-slate-700 ml-4">
-                        <li>assurer la présence régulière et assidue de mon enfant aux entraînements ;</li>
-                        <li>respecter et faire respecter par mon enfant les textes et règlements de l'association ;</li>
-                        <li>veiller à ce que mon enfant respecte les consignes des entraîneurs et dirigeants ;</li>
-                        <li>m'assurer que mon enfant prenne soin de toute dotation en matériel fournie par l'association ;</li>
-                        <li>soutenir les valeurs d'éthique et de morale promues par l'association ;</li>
-                        <li>contribuer positivement au développement sportif et personnel de mon enfant au sein de l'association ;</li>
-                        <li>informer l'association de tout problème de santé ou toute situation particulière concernant mon enfant ;</li>
-                        <li>m'assurer que mon enfant respecte les règles d'éthique et de morale.</li>
+                        <li>assurer la présence régulière et assidue de mon enfant aux entraînements</li>
+                        <li>respecter et faire respecter par mon enfant les textes et règlements de l'association</li>
+                        <li>veiller à ce que mon enfant respecte les consignes des entraîneurs et dirigeants</li>
+                        <li>m'assurer que mon enfant prenne soin de toute dotation en matériel fournie par l'association</li>
+                        <li>soutenir les valeurs d'éthique et de morale promues par l'association</li>
+                        <li>contribuer positivement au développement sportif et personnel de mon enfant au sein de l'association</li>
+                        <li>informer l'association de tout problème de santé ou toute situation particulière concernant mon enfant</li>
+                        <li>m'assurer que mon enfant respecte les règles d'éthique et de morale</li>
                     </ul>
 
                     <p class="text-sm leading-relaxed mt-6 font-medium">
@@ -684,68 +490,46 @@
                 const fonctionEntraineur = document.getElementById('fonctionEntraineur').value.trim();
                 const telephoneEntraineur = document.getElementById('telephoneEntraineur').value.trim();
                 const emailEntraineur = document.getElementById('emailEntraineur').value.trim();
-                
-                // Récupération des données des athlètes
-                const athletesData = [];
-                const athleteFields = document.querySelectorAll('#athletesContainer .athlete-field');
-
-                athleteFields.forEach(field => {
-                    const nom = field.querySelector(`input[name="nomAthlete[]"]`).value.trim();
-                    const naissanceValue = field.querySelector(`input[name="naissanceAthlete[]"]`).value;
-                    const specialite = field.querySelector(`input[name="specialite[]"]`).value.trim();
-                    const niveau = field.querySelector(`select[name="niveau[]"]`).value;
-                    
-                    const naissance = naissanceValue ? new Date(naissanceValue).toLocaleDateString('fr-FR') : 'Date non spécifiée';
-
-                    athletesData.push({ nom, naissance, specialite, niveau });
-                });
-                
-                // Création de la liste des athlètes pour la fiche
-                let athletesListHTML = athletesData.map((athlete) => {
-                    return `<li class="text-sm text-slate-700"><strong>${athlete.nom}</strong> (Né le : ${athlete.naissance}, Spécialité : ${athlete.specialite}, Niveau : ${athlete.niveau})</li>`;
-                }).join('');
+                const nomAthlete = document.getElementById('nomAthlete').value.trim();
+                const naissanceAthlete = new Date(document.getElementById('naissanceAthlete').value).toLocaleDateString('fr-FR');
+                const specialite = document.getElementById('specialite').value.trim();
+                const niveau = document.getElementById('niveau').value;
 
                 ficheContent = `
                 <p class="text-sm leading-relaxed">
                     Je soussigné(e), <strong class="uppercase">${nomEntraineur}</strong>, 
                     ${fonctionEntraineur} de l'Association Sportive des Finances, section Athlétisme U12, 
                     joignable au <strong>${telephoneEntraineur}</strong>${emailEntraineur ? ` et à l'adresse <strong>${emailEntraineur}</strong>` : ''}, 
-                    certifie avoir pris en charge l'encadrement sportif des athlètes suivants :
+                    certifie avoir pris en charge l'encadrement sportif de 
+                    <strong class="uppercase">${nomAthlete}</strong>, né(e) le <strong>${naissanceAthlete}</strong>, 
+                    spécialiste en <strong>${specialite}</strong>, niveau <strong>${niveau}</strong>.
                 </p>
-
-                <div class="mt-4 mb-6">
-                    <h3 class="text-base font-semibold text-slate-800 mb-2">Liste des Athlètes :</h3>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
-                        ${athletesListHTML}
-                    </ul>
-                </div>
 
                 <p class="text-sm font-medium text-slate-700 mt-6 mb-3">En tant qu'entraîneur, je m'engage à :</p>
 
                 <ul class="list-disc list-inside text-sm text-slate-700 ml-4 space-y-1">
-                    <li>assurer un suivi régulier et adapté des athlètes ;</li>
-                    <li>veiller au respect des règlements de l'association ;</li>
-                    <li>garantir un encadrement technique et éducatif de qualité ;</li>
-                    <li>promouvoir discipline, éthique et fair-play ;</li>
-                    <li>communiquer avec les parents/tuteurs et signaler toute difficulté ;</li>
-                    <li>respecter le calendrier d'entraînement et de compétition ;</li>
-                    <li>protéger et accompagner le développement de l'athlète.</li>
+                    <li>assurer un suivi régulier et adapté de l'athlète</li>
+                    <li>veiller au respect des règlements de l'association</li>
+                    <li>garantir un encadrement technique et éducatif de qualité</li>
+                    <li>promouvoir discipline, éthique et fair-play</li>
+                    <li>communiquer avec les parents/tuteurs et signaler toute difficulté</li>
+                    <li>respecter le calendrier d'entraînement et de compétition</li>
+                    <li>protéger et accompagner le développement de l'athlète</li>
                 </ul>
 
                 <p class="text-sm leading-relaxed mt-6 font-medium">
                     Je déclare avoir pris connaissance des règlements de l'Association Sportive des Finances 
                     et m'engage à les respecter. Le présent engagement est établi pour garantir 
-                    le développement sportif et personnel des athlètes ainsi que la réussite collective de l'association.
+                    le développement sportif et personnel de l'athlète ainsi que la réussite collective de l'association.
                 </p>
                 `;
 
 
-                signatureLabel.textContent = "Signature de l'entraîneur";
+                signatureLabel.textContent = 'Signature du entraineur';
             }
 
             ficheText.innerHTML = ficheContent;
             dateGeneration.textContent = aujourdhui;
-            document.getElementById('formulaire').classList.add('hidden'); // Masquer le formulaire
             ficheContainer.classList.remove('hidden');
             ficheContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
@@ -753,20 +537,11 @@
         function resetForm() {
             form.reset();
             ficheContainer.classList.add('hidden');
-            document.getElementById('formulaire').classList.remove('hidden'); // Afficher le formulaire
 
             document.querySelectorAll('.form-input').forEach(input => {
                 input.classList.remove('border-red-300', 'bg-red-50');
                 input.classList.add('border-slate-200');
             });
-
-            // Retirer tous les athlètes sauf le premier
-            const athleteFields = document.querySelectorAll('#athletesContainer .athlete-field');
-            for (let i = athleteFields.length - 1; i > 0; i--) {
-                athleteFields[i].remove();
-            }
-            athleteCount = 0; // Réinitialiser le compteur
-            updateAthleteRemoveButtons(); // S'assurer que le bouton de suppression est masqué pour l'unique champ
 
             if (currentTab === 'parent') {
                 document.getElementById('nomParent').focus();
@@ -775,36 +550,21 @@
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        
-        /**
-         * Fonction pour formater le nom/prénom: Première lettre de chaque mot en majuscule.
-         * Sauf pour le parent/enfant pour un rendu MAJUSCULE dans la fiche générée
-         */
-        function formatNameInput(e) {
-            let value = this.value;
-            // Pour le parent/enfant on convertit en MAJUSCULE pour un rendu plus formel
-            if (this.id === 'nomParent' || this.id === 'nomEnfant') {
-                 this.value = value.toUpperCase();
-            } else {
-                // Pour l'entraîneur/athlète, on capitalise
-                this.value = value.toLowerCase().split(' ').map(word => {
-                    return word.charAt(0).toUpperCase() + word.substring(1);
-                }).join(' ');
-            }
-        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('nomParent').focus();
+        });
 
         // Formatage automatique des noms
-        ['nomParent', 'nomEnfant', 'nomEntraineur'].forEach(id => {
+        ['nomParent', 'nomEnfant', 'nomEntraineur', 'nomAthlete'].forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', formatNameInput);
+                element.addEventListener('input', function (e) {
+                    const value = this.value;
+                    this.value = value.replace(/\b\w/g, l => l.toUpperCase());
+                });
             }
         });
-        // Initialiser l'écouteur pour le premier athlète
-        const firstAthleteName = document.getElementById('nomAthlete-0');
-        if (firstAthleteName) {
-            firstAthleteName.addEventListener('input', formatNameInput);
-        }
 
         window.addEventListener('beforeprint', function () {
             document.querySelector('.print-header').classList.remove('hidden');
