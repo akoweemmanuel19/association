@@ -273,28 +273,28 @@
                             </div>
 
                             <div class="space-y-2">
-                                <label for="fonctionEntraineur"
-                                    class="block text-sm font-medium text-slate-700">Fonction</label>
-                                <input type="text" id="fonctionEntraineur" name="fonctionEntraineur"
-                                    placeholder="Ex: Entraîneur Principal"
+                                <label for="dateNaissanceEntraineur"
+                                    class="block text-sm font-medium text-slate-700">Date de naissance</label>
+                                <input type="date" id="dateNaissanceEntraineur" name="dateNaissanceEntraineur"
+                                    placeholder="Ex: 12/12/1990"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label for="telephoneEntraineur"
+                                <label for="numeroCIN"
                                     class="block text-sm font-medium text-slate-700">Téléphone</label>
-                                <input type="tel" id="telephoneEntraineur" name="telephoneEntraineur"
-                                    placeholder="Ex: +229 97 00 00 00"
+                                <input type="text" id="numeroCIN" name="numeroCIN"
+                                    placeholder="Ex: 2311212133232"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
 
                             <div class="space-y-2">
-                                <label for="emailEntraineur"
+                                <label for="dateExpirationCIN"
                                     class="block text-sm font-medium text-slate-700">Email</label>
-                                <input type="email" id="emailEntraineur" name="emailEntraineur"
-                                    placeholder="Ex: entraineur@asfinances.bj"
+                                <input type="date" id="dateExpirationCIN" name="dateExpirationCIN"
+                                    placeholder="Ex: 11/11/2027"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
                         </div>
@@ -590,7 +590,7 @@
                 requiredFields = ['nomParent', 'carteParent', 'nomEnfant', 'naissanceEnfant'];
             } else {
                 // Champs requis pour l'entraîneur
-                requiredFields = ['nomEntraineur', 'fonctionEntraineur', 'telephoneEntraineur'];
+                requiredFields = ['nomEntraineur', 'dateNaissanceEntraineur', 'numeroCIN'];
                 
                 // Valider les champs dynamiques des athlètes
                 const athleteFields = document.querySelectorAll('#athletesContainer .athlete-field');
@@ -679,9 +679,9 @@
 
             } else {
                 const nomEntraineur = document.getElementById('nomEntraineur').value.trim();
-                const fonctionEntraineur = document.getElementById('fonctionEntraineur').value.trim();
-                const telephoneEntraineur = document.getElementById('telephoneEntraineur').value.trim();
-                const emailEntraineur = document.getElementById('emailEntraineur').value.trim();
+                const dateNaissanceEntraineur = document.getElementById('dateNaissanceEntraineur').value.trim();
+                const numeroCIN = document.getElementById('numeroCIN').value.trim();
+                const dateExpirationCIN = document.getElementById('dateExpirationCIN').value.trim();
                 
                 // Récupération des données des athlètes
                 const athletesData = [];
@@ -700,15 +700,14 @@
                 
                 // Création de la liste des athlètes pour la fiche
                 let athletesListHTML = athletesData.map((athlete) => {
-                    return `<li class="text-sm text-slate-700"><strong>${athlete.nom}</strong> (Né le : ${athlete.naissance}, Spécialité : ${athlete.specialite}, Niveau : ${athlete.niveau})</li>`;
+                    return `<li class="text-sm text-slate-700"><strong>${athlete.nom}</strong> (Né le : ${athlete.naissance})</li>`;
                 }).join('');
 
                 ficheContent = `
                 <p class="text-sm leading-relaxed">
                     Je soussigné(e), <strong class="uppercase">${nomEntraineur}</strong>, 
-                    ${fonctionEntraineur} de l'Association Sportive des Finances, section Athlétisme U12, 
-                    joignable au <strong>${telephoneEntraineur}</strong>${emailEntraineur ? ` et à l'adresse <strong>${emailEntraineur}</strong>` : ''}, 
-                    certifie avoir pris en charge l'encadrement sportif des athlètes suivants :
+                    numéro de carte d'identité <strong>${numeroCIN}</strong> expirant le <strong>${dateExpirationCIN}</strong>, 
+                    m'engage à entraîner les athlètes de l'Association Sportive des Finances, section Athlétisme U12.
                 </p>
 
                 <div class="mt-4 mb-6">
@@ -718,24 +717,23 @@
                     </ul>
                 </div>
 
-                <p class="text-sm font-medium text-slate-700 mt-6 mb-3">En tant qu'entraîneur, je m'engage à :</p>
+                <p class="text-sm font-medium text-slate-700 mt-6 mb-3">À ce titre, je m'engage :</p>
 
                 <ul class="list-disc list-inside text-sm text-slate-700 ml-4 space-y-1">
-                    <li>assurer un suivi régulier et adapté des athlètes ;</li>
-                    <li>veiller au respect des règlements de l'association ;</li>
-                    <li>garantir un encadrement technique et éducatif de qualité ;</li>
-                    <li>promouvoir discipline, éthique et fair-play ;</li>
-                    <li>communiquer avec les parents/tuteurs et signaler toute difficulté ;</li>
-                    <li>respecter le calendrier d'entraînement et de compétition ;</li>
-                    <li>protéger et accompagner le développement de l'athlète.</li>
+                    <li>à entraîner avec assiduité les athlètes de l'association ;</li>
+                    <li>à respecter et faire respecter les textes de l'association ;</li>
+                    <li>à ne détourner aucun athlète de l'association à toute fin ;</li>
+                    <li>à prendre soin de toute dotation en matériel venant de l'association ;</li>
+                    <li>à respecter avec rigueur les consignes venant des dirigeants de l'association ;</li>
+                    <li>à respecter les règles d'éthique et de morale de l'association ;</li>
+                    <li>à respecter les règles de protection des enfants mineurs et surtout des filles en République du Bénin.</li>
                 </ul>
 
                 <p class="text-sm leading-relaxed mt-6 font-medium">
-                    Je déclare avoir pris connaissance des règlements de l'Association Sportive des Finances 
-                    et m'engage à les respecter. Le présent engagement est établi pour garantir 
-                    le développement sportif et personnel des athlètes ainsi que la réussite collective de l'association.
+                    Le présent m'engage face aux textes de l'Association Sportive des Finances.
                 </p>
                 `;
+
 
 
                 signatureLabel.textContent = "Signature de l'entraîneur";
