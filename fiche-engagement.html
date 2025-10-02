@@ -182,9 +182,9 @@
                     class="tab-button active flex-1 py-3 px-6 rounded-md font-medium text-sm">
                     Parent/Tuteur
                 </button>
-                <button type="button" onclick="switchTab('recruteur')" id="tabRecruteur" 
+                <button type="button" onclick="switchTab('entraineur')" id="tabEntraineur" 
                     class="tab-button flex-1 py-3 px-6 rounded-md font-medium text-sm text-slate-600">
-                    Recruteur
+                    entraineur
                 </button>
             </div>
 
@@ -267,42 +267,42 @@
                     </div>
                 </div>
 
-                <!-- Formulaire Recruteur -->
-                <div id="formRecruteur" class="space-y-8 hidden">
-                    <!-- Informations du recruteur -->
+                <!-- Formulaire entraineur -->
+                <div id="formEntraineur" class="space-y-8 hidden">
+                    <!-- Informations du entraineur -->
                     <div class="space-y-4">
                         <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
                             <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
-                            <span>Informations du Recruteur</span>
+                            <span>Informations du entraineur</span>
                         </h2>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label for="nomRecruteur" class="block text-sm font-medium text-slate-700">Nom et prénoms</label>
-                                <input type="text" id="nomRecruteur" placeholder="Ex: KOSSOU Jean-Pierre"
+                                <label for="nomEntraineur" class="block text-sm font-medium text-slate-700">Nom et prénoms</label>
+                                <input type="text" id="nomEntraineur" placeholder="Ex: KOSSOU Jean-Pierre"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
 
                             <div class="space-y-2">
-                                <label for="fonctionRecruteur" class="block text-sm font-medium text-slate-700">Fonction</label>
-                                <input type="text" id="fonctionRecruteur" placeholder="Ex: Entraîneur Principal"
+                                <label for="fonctionEntraineur" class="block text-sm font-medium text-slate-700">Fonction</label>
+                                <input type="text" id="fonctionEntraineur" placeholder="Ex: Entraîneur Principal"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label for="telephoneRecruteur" class="block text-sm font-medium text-slate-700">Téléphone</label>
-                                <input type="tel" id="telephoneRecruteur" placeholder="Ex: +229 97 00 00 00"
+                                <label for="telephoneEntraineur" class="block text-sm font-medium text-slate-700">Téléphone</label>
+                                <input type="tel" id="telephoneEntraineur" placeholder="Ex: +229 97 00 00 00"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
 
                             <div class="space-y-2">
-                                <label for="emailRecruteur" class="block text-sm font-medium text-slate-700">Email</label>
-                                <input type="email" id="emailRecruteur" placeholder="Ex: recruteur@asfinances.bj"
+                                <label for="emailEntraineur" class="block text-sm font-medium text-slate-700">Email</label>
+                                <input type="email" id="emailEntraineur" placeholder="Ex: entraineur@asfinances.bj"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
                         </div>
@@ -435,19 +435,19 @@
         function switchTab(tab) {
             currentTab = tab;
             const tabParent = document.getElementById('tabParent');
-            const tabRecruteur = document.getElementById('tabRecruteur');
+            const tabEntraineur = document.getElementById('tabEntraineur');
             const formParent = document.getElementById('formParent');
-            const formRecruteur = document.getElementById('formRecruteur');
+            const formEntraineur = document.getElementById('formEntraineur');
 
             if (tab === 'parent') {
                 tabParent.classList.add('active');
-                tabRecruteur.classList.remove('active');
+                tabEntraineur.classList.remove('active');
                 formParent.classList.remove('hidden');
-                formRecruteur.classList.add('hidden');
+                formEntraineur.classList.add('hidden');
             } else {
-                tabRecruteur.classList.add('active');
+                tabEntraineur.classList.add('active');
                 tabParent.classList.remove('active');
-                formRecruteur.classList.remove('hidden');
+                formEntraineur.classList.remove('hidden');
                 formParent.classList.add('hidden');
             }
 
@@ -465,7 +465,7 @@
             if (currentTab === 'parent') {
                 requiredFields = ['nomParent', 'naissanceParent', 'carteParent', 'expirationParent', 'nomEnfant', 'naissanceEnfant'];
             } else {
-                requiredFields = ['nomRecruteur', 'fonctionRecruteur', 'telephoneRecruteur', 'nomAthlete', 'naissanceAthlete', 'specialite', 'niveau'];
+                requiredFields = ['nomEntraineur', 'fonctionEntraineur', 'telephoneEntraineur', 'nomAthlete', 'naissanceAthlete', 'specialite', 'niveau'];
             }
 
             requiredFields.forEach(fieldId => {
@@ -528,10 +528,10 @@
                 signatureLabel.textContent = 'Signature du parent/tuteur';
 
             } else {
-                const nomRecruteur = document.getElementById('nomRecruteur').value.trim();
-                const fonctionRecruteur = document.getElementById('fonctionRecruteur').value.trim();
-                const telephoneRecruteur = document.getElementById('telephoneRecruteur').value.trim();
-                const emailRecruteur = document.getElementById('emailRecruteur').value.trim();
+                const nomEntraineur = document.getElementById('nomEntraineur').value.trim();
+                const fonctionEntraineur = document.getElementById('fonctionEntraineur').value.trim();
+                const telephoneEntraineur = document.getElementById('telephoneEntraineur').value.trim();
+                const emailEntraineur = document.getElementById('emailEntraineur').value.trim();
                 const nomAthlete = document.getElementById('nomAthlete').value.trim();
                 const naissanceAthlete = new Date(document.getElementById('naissanceAthlete').value).toLocaleDateString('fr-FR');
                 const specialite = document.getElementById('specialite').value.trim();
@@ -539,15 +539,15 @@
 
                 ficheContent = `
                     <p class="text-sm leading-relaxed">
-                        Je soussigné(e), <strong class="uppercase">${nomRecruteur}</strong>, 
-                        ${fonctionRecruteur} de l'Association Sportive des Finances, section Athlétisme U12, 
-                        joignable au <strong>${telephoneRecruteur}</strong>${emailRecruteur ? ` et à l'adresse <strong>${emailRecruteur}</strong>` : ''}, 
+                        Je soussigné(e), <strong class="uppercase">${nomEntraineur}</strong>, 
+                        ${fonctionEntraineur} de l'Association Sportive des Finances, section Athlétisme U12, 
+                        joignable au <strong>${telephoneEntraineur}</strong>${emailEntraineur ? ` et à l'adresse <strong>${emailEntraineur}</strong>` : ''}, 
                         certifie par la présente avoir recruté <strong class="uppercase">${nomAthlete}</strong>, 
                         né(e) le <strong>${naissanceAthlete}</strong>, spécialiste en <strong>${specialite}</strong>, 
                         niveau <strong>${niveau}</strong>, au sein de notre association.
                     </p>
 
-                    <p class="text-sm font-medium text-slate-700 mt-6 mb-4">En tant que recruteur, je m'engage à :</p>
+                    <p class="text-sm font-medium text-slate-700 mt-6 mb-4">En tant que entraineur, je m'engage à :</p>
 
                     <ul class="list-disc list-inside space-y-2 text-sm text-slate-700 ml-4">
                         <li>assurer un suivi régulier et personnalisé de l'athlète recruté</li>
@@ -570,7 +570,7 @@
                         de cause pour le développement sportif de l'athlète et de l'association.
                     </p>
                 `;
-                signatureLabel.textContent = 'Signature du recruteur';
+                signatureLabel.textContent = 'Signature du entraineur';
             }
 
             ficheText.innerHTML = ficheContent;
@@ -591,7 +591,7 @@
             if (currentTab === 'parent') {
                 document.getElementById('nomParent').focus();
             } else {
-                document.getElementById('nomRecruteur').focus();
+                document.getElementById('nomEntraineur').focus();
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -601,7 +601,7 @@
         });
 
         // Formatage automatique des noms
-        ['nomParent', 'nomEnfant', 'nomRecruteur', 'nomAthlete'].forEach(id => {
+        ['nomParent', 'nomEnfant', 'nomEntraineur', 'nomAthlete'].forEach(id => {
             const element = document.getElementById(id);
             if (element) {
                 element.addEventListener('input', function (e) {
