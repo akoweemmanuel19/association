@@ -87,6 +87,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -125,7 +126,11 @@
         }
 
         @media print {
-            #formulaire, .no-print, #entete, #ficheStatus {
+
+            #formulaire,
+            .no-print,
+            #entete,
+            #ficheStatus {
                 display: none !important;
             }
 
@@ -178,11 +183,11 @@
         <div id="formulaire">
             <!-- Tabs pour choisir le type de profil -->
             <div class="flex gap-3 mb-8 p-1 bg-gray-100 rounded-lg">
-                <button type="button" onclick="switchTab('parent')" id="tabParent" 
+                <button type="button" onclick="switchTab('parent')" id="tabParent"
                     class="tab-button active flex-1 py-3 px-6 rounded-md font-medium text-sm">
                     Parent/Tuteur
                 </button>
-                <button type="button" onclick="switchTab('entraineur')" id="tabEntraineur" 
+                <button type="button" onclick="switchTab('entraineur')" id="tabEntraineur"
                     class="tab-button flex-1 py-3 px-6 rounded-md font-medium text-sm text-slate-600">
                     Entraineur
                 </button>
@@ -194,22 +199,20 @@
                     <!-- Informations du parent -->
                     <div class="space-y-4">
                         <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
-                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
                             <span>Informations du Parent/Tuteur</span>
                         </h2>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label for="nomParent" class="block text-sm font-medium text-slate-700">Nom et prénoms</label>
+                                <label for="nomParent" class="block text-sm font-medium text-slate-700">Nom et
+                                    prénoms</label>
                                 <input type="text" id="nomParent" placeholder="Ex: DJOSSOU Marie-Claire"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
 
                             <div class="space-y-2">
-                                <label for="naissanceParent" class="block text-sm font-medium text-slate-700">Date de naissance</label>
+                                <label for="naissanceParent" class="block text-sm font-medium text-slate-700">Date de
+                                    naissance</label>
                                 <input type="date" id="naissanceParent"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
@@ -219,22 +222,20 @@
                     <!-- Informations d'identité du parent -->
                     <div class="space-y-4">
                         <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
-                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
                             <span>Pièce d'identité</span>
                         </h2>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label for="carteParent" class="block text-sm font-medium text-slate-700">Numéro de carte d'identité</label>
+                                <label for="carteParent" class="block text-sm font-medium text-slate-700">Numéro de
+                                    carte d'identité</label>
                                 <input type="text" id="carteParent" placeholder="Ex: 123456789012"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
 
                             <div class="space-y-2">
-                                <label for="expirationParent" class="block text-sm font-medium text-slate-700">Date d'expiration</label>
+                                <label for="expirationParent" class="block text-sm font-medium text-slate-700">Date
+                                    d'expiration</label>
                                 <input type="date" id="expirationParent"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
@@ -244,22 +245,20 @@
                     <!-- Informations de l'enfant -->
                     <div class="space-y-4">
                         <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
-                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
                             <span>Informations de l'Enfant</span>
                         </h2>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label for="nomEnfant" class="block text-sm font-medium text-slate-700">Nom et prénoms</label>
+                                <label for="nomEnfant" class="block text-sm font-medium text-slate-700">Nom et
+                                    prénoms</label>
                                 <input type="text" id="nomEnfant" placeholder="Ex: DJOSSOU Junior"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
 
                             <div class="space-y-2">
-                                <label for="naissanceEnfant" class="block text-sm font-medium text-slate-700">Date de naissance</label>
+                                <label for="naissanceEnfant" class="block text-sm font-medium text-slate-700">Date de
+                                    naissance</label>
                                 <input type="date" id="naissanceEnfant"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
@@ -272,22 +271,20 @@
                     <!-- Informations du entraineur -->
                     <div class="space-y-4">
                         <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
-                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
                             <span>Informations de l'entraineur</span>
                         </h2>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label for="nomEntraineur" class="block text-sm font-medium text-slate-700">Nom et prénoms</label>
+                                <label for="nomEntraineur" class="block text-sm font-medium text-slate-700">Nom et
+                                    prénoms</label>
                                 <input type="text" id="nomEntraineur" placeholder="Ex: KOSSOU Jean-Pierre"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
 
                             <div class="space-y-2">
-                                <label for="fonctionEntraineur" class="block text-sm font-medium text-slate-700">Fonction</label>
+                                <label for="fonctionEntraineur"
+                                    class="block text-sm font-medium text-slate-700">Fonction</label>
                                 <input type="text" id="fonctionEntraineur" placeholder="Ex: Entraîneur Principal"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
@@ -295,13 +292,15 @@
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label for="telephoneEntraineur" class="block text-sm font-medium text-slate-700">Téléphone</label>
+                                <label for="telephoneEntraineur"
+                                    class="block text-sm font-medium text-slate-700">Téléphone</label>
                                 <input type="tel" id="telephoneEntraineur" placeholder="Ex: +229 97 00 00 00"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
 
                             <div class="space-y-2">
-                                <label for="emailEntraineur" class="block text-sm font-medium text-slate-700">Email</label>
+                                <label for="emailEntraineur"
+                                    class="block text-sm font-medium text-slate-700">Email</label>
                                 <input type="email" id="emailEntraineur" placeholder="Ex: entraineur@asfinances.bj"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
@@ -311,22 +310,20 @@
                     <!-- Informations de l'athlète recruté -->
                     <div class="space-y-4">
                         <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
-                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
                             <span>Informations de l'Athlète</span>
                         </h2>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label for="nomAthlete" class="block text-sm font-medium text-slate-700">Nom et prénoms</label>
+                                <label for="nomAthlete" class="block text-sm font-medium text-slate-700">Nom et
+                                    prénoms</label>
                                 <input type="text" id="nomAthlete" placeholder="Ex: ADJIBI Marc"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
 
                             <div class="space-y-2">
-                                <label for="naissanceAthlete" class="block text-sm font-medium text-slate-700">Date de naissance</label>
+                                <label for="naissanceAthlete" class="block text-sm font-medium text-slate-700">Date de
+                                    naissance</label>
                                 <input type="date" id="naissanceAthlete"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
@@ -334,7 +331,8 @@
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label for="specialite" class="block text-sm font-medium text-slate-700">Spécialité</label>
+                                <label for="specialite"
+                                    class="block text-sm font-medium text-slate-700">Spécialité</label>
                                 <input type="text" id="specialite" placeholder="Ex: Sprint 100m"
                                     class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
                             </div>
@@ -542,15 +540,16 @@
                         Je soussigné(e), <strong class="uppercase">${nomEntraineur}</strong>, 
                         ${fonctionEntraineur} de l'Association Sportive des Finances, section Athlétisme U12, 
                         joignable au <strong>${telephoneEntraineur}</strong>${emailEntraineur ? ` et à l'adresse <strong>${emailEntraineur}</strong>` : ''}, 
-                        certifie par la présente avoir recruté <strong class="uppercase">${nomAthlete}</strong>, 
-                        né(e) le <strong>${naissanceAthlete}</strong>, spécialiste en <strong>${specialite}</strong>, 
-                        niveau <strong>${niveau}</strong>, au sein de notre association.
+                        certifie par la présente avoir pris en charge l'encadrement sportif de 
+                        <strong class="uppercase">${nomAthlete}</strong>, né(e) le <strong>${naissanceAthlete}</strong>, 
+                        spécialiste en <strong>${specialite}</strong>, niveau <strong>${niveau}</strong>, 
+                        au sein de notre association.
                     </p>
 
-                    <p class="text-sm font-medium text-slate-700 mt-6 mb-4">En tant que entraineur, je m'engage à :</p>
+                    <p class="text-sm font-medium text-slate-700 mt-6 mb-4">En tant qu'entraîneur, je m'engage à :</p>
 
                     <ul class="list-disc list-inside space-y-2 text-sm text-slate-700 ml-4">
-                        <li>assurer un suivi régulier et personnalisé de l'athlète recruté</li>
+                        <li>assurer un suivi régulier et personnalisé de l'athlète</li>
                         <li>veiller au respect des règlements et textes de l'association par l'athlète</li>
                         <li>garantir un encadrement technique de qualité adapté au niveau de l'athlète</li>
                         <li>promouvoir les valeurs d'éthique, de discipline et de fair-play</li>
@@ -560,16 +559,16 @@
                         <li>signaler toute difficulté ou situation particulière à la direction de l'association</li>
                         <li>respecter le calendrier d'entraînement et de compétition établi</li>
                         <li>contribuer activement à l'atteinte des objectifs sportifs de l'association</li>
-                        <li>respecter les règles d'éthiques, de morales de l'association</li>
-                        <li>respecter les règles de protection des enfants mineurs et surtout les filles en république du Bénin</li>
+                        <li>respecter les règles de protection des enfants mineurs et en particulier des filles en République du Bénin</li>
                     </ul>
 
                     <p class="text-sm leading-relaxed mt-6 font-medium">
                         Je reconnais avoir pris connaissance des règlements de l'Association Sportive des Finances 
-                        et m'engage à les respecter. Le présent engagement de recrutement est fait en toute connaissance 
+                        et m'engage à les respecter. Le présent engagement d'encadrement est fait en toute connaissance 
                         de cause pour le développement sportif de l'athlète et de l'association.
                     </p>
-                `;
+                    `;
+
                 signatureLabel.textContent = 'Signature du entraineur';
             }
 
