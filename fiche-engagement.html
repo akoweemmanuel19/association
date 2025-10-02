@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fiche d'engagement Parent - AS Finances</title>
+    <title>Fiche d'engagement - AS Finances</title>
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -87,17 +87,30 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        .status-badge {
-            background: #ecfdf5;
-            color: #065f46;
-            border: 1px solid #d1fae5;
+        .tab-button {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+            color: white;
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #64748b;
         }
 
         .success-badge {
@@ -112,19 +125,7 @@
         }
 
         @media print {
-
-            #formulaire,
-            .no-print {
-                display: none !important;
-            }
-
-            #entete,
-            .no-print {
-                display: none !important;
-            }
-
-            #ficheStatus,
-            .no-print {
+            #formulaire, .no-print, #entete, #ficheStatus {
                 display: none !important;
             }
 
@@ -145,11 +146,6 @@
                 text-align: center;
                 margin-bottom: 30px;
             }
-
-            .print-logo {
-                max-height: 80px;
-                margin: 0 auto 20px;
-            }
         }
     </style>
 </head>
@@ -168,7 +164,7 @@
                     Générateur de QR Code
                 </a>
                 <a href="fiche-engagement.html" class="text-xl text-blue-500 font-semibold mb-3">
-                    Fiche d'engagement Parent
+                    Fiche d'engagement
                 </a>
             </div>
 
@@ -180,78 +176,179 @@
 
         <!-- Formulaire -->
         <div id="formulaire">
+            <!-- Tabs pour choisir le type de profil -->
+            <div class="flex gap-3 mb-8 p-1 bg-gray-100 rounded-lg">
+                <button type="button" onclick="switchTab('parent')" id="tabParent" 
+                    class="tab-button active flex-1 py-3 px-6 rounded-md font-medium text-sm">
+                    Parent/Tuteur
+                </button>
+                <button type="button" onclick="switchTab('recruteur')" id="tabRecruteur" 
+                    class="tab-button flex-1 py-3 px-6 rounded-md font-medium text-sm text-slate-600">
+                    Recruteur
+                </button>
+            </div>
+
             <form id="engagementForm" class="space-y-8">
-                <!-- Informations du parent -->
-                <div class="space-y-4">
-                    <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
-                        <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        <span>Informations du Parent/Tuteur</span>
-                    </h2>
+                <!-- Formulaire Parent/Tuteur -->
+                <div id="formParent" class="space-y-8">
+                    <!-- Informations du parent -->
+                    <div class="space-y-4">
+                        <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            <span>Informations du Parent/Tuteur</span>
+                        </h2>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label for="nomParent" class="block text-sm font-medium text-slate-700">Nom et prénoms du parent</label>
-                            <input type="text" id="nomParent" placeholder="Ex: DJOSSOU Marie-Claire" required
-                                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="nomParent" class="block text-sm font-medium text-slate-700">Nom et prénoms</label>
+                                <input type="text" id="nomParent" placeholder="Ex: DJOSSOU Marie-Claire"
+                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="naissanceParent" class="block text-sm font-medium text-slate-700">Date de naissance</label>
+                                <input type="date" id="naissanceParent"
+                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            </div>
                         </div>
+                    </div>
 
-                        <div class="space-y-2">
-                            <label for="naissanceParent" class="block text-sm font-medium text-slate-700">Date de naissance</label>
-                            <input type="date" id="naissanceParent" required
-                                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                    <!-- Informations d'identité du parent -->
+                    <div class="space-y-4">
+                        <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <span>Pièce d'identité</span>
+                        </h2>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="carteParent" class="block text-sm font-medium text-slate-700">Numéro de carte d'identité</label>
+                                <input type="text" id="carteParent" placeholder="Ex: 123456789012"
+                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="expirationParent" class="block text-sm font-medium text-slate-700">Date d'expiration</label>
+                                <input type="date" id="expirationParent"
+                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Informations de l'enfant -->
+                    <div class="space-y-4">
+                        <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>Informations de l'Enfant</span>
+                        </h2>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="nomEnfant" class="block text-sm font-medium text-slate-700">Nom et prénoms</label>
+                                <input type="text" id="nomEnfant" placeholder="Ex: DJOSSOU Junior"
+                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="naissanceEnfant" class="block text-sm font-medium text-slate-700">Date de naissance</label>
+                                <input type="date" id="naissanceEnfant"
+                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Informations d'identité du parent -->
-                <div class="space-y-4">
-                    <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
-                        <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        <span>Pièce d'identité du Parent</span>
-                    </h2>
+                <!-- Formulaire Recruteur -->
+                <div id="formRecruteur" class="space-y-8 hidden">
+                    <!-- Informations du recruteur -->
+                    <div class="space-y-4">
+                        <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span>Informations du Recruteur</span>
+                        </h2>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label for="carteParent" class="block text-sm font-medium text-slate-700">Numéro de carte d'identité</label>
-                            <input type="text" id="carteParent" placeholder="Ex: 123456789012" required
-                                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="nomRecruteur" class="block text-sm font-medium text-slate-700">Nom et prénoms</label>
+                                <input type="text" id="nomRecruteur" placeholder="Ex: KOSSOU Jean-Pierre"
+                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="fonctionRecruteur" class="block text-sm font-medium text-slate-700">Fonction</label>
+                                <input type="text" id="fonctionRecruteur" placeholder="Ex: Entraîneur Principal"
+                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            </div>
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="expirationParent" class="block text-sm font-medium text-slate-700">Date d'expiration</label>
-                            <input type="date" id="expirationParent" required
-                                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="telephoneRecruteur" class="block text-sm font-medium text-slate-700">Téléphone</label>
+                                <input type="tel" id="telephoneRecruteur" placeholder="Ex: +229 97 00 00 00"
+                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="emailRecruteur" class="block text-sm font-medium text-slate-700">Email</label>
+                                <input type="email" id="emailRecruteur" placeholder="Ex: recruteur@asfinances.bj"
+                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Informations de l'enfant -->
-                <div class="space-y-4">
-                    <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
-                        <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>Informations de l'Enfant</span>
-                    </h2>
+                    <!-- Informations de l'athlète recruté -->
+                    <div class="space-y-4">
+                        <h2 class="text-lg font-semibold text-slate-700 flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            <span>Informations de l'Athlète</span>
+                        </h2>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label for="nomEnfant" class="block text-sm font-medium text-slate-700">Nom et prénoms de l'enfant</label>
-                            <input type="text" id="nomEnfant" placeholder="Ex: DJOSSOU Junior" required
-                                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="nomAthlete" class="block text-sm font-medium text-slate-700">Nom et prénoms</label>
+                                <input type="text" id="nomAthlete" placeholder="Ex: ADJIBI Marc"
+                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="naissanceAthlete" class="block text-sm font-medium text-slate-700">Date de naissance</label>
+                                <input type="date" id="naissanceAthlete"
+                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            </div>
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="naissanceEnfant" class="block text-sm font-medium text-slate-700">Date de naissance</label>
-                            <input type="date" id="naissanceEnfant" required
-                                class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="specialite" class="block text-sm font-medium text-slate-700">Spécialité</label>
+                                <input type="text" id="specialite" placeholder="Ex: Sprint 100m"
+                                    class="form-input w-full px-4 py-3 rounded-lg text-slate-900" />
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="niveau" class="block text-sm font-medium text-slate-700">Niveau</label>
+                                <select id="niveau" class="form-input w-full px-4 py-3 rounded-lg text-slate-900">
+                                    <option value="">Sélectionner</option>
+                                    <option value="Débutant">Débutant</option>
+                                    <option value="Intermédiaire">Intermédiaire</option>
+                                    <option value="Avancé">Avancé</option>
+                                    <option value="Compétition">Compétition</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -282,8 +379,6 @@
                     </div>
                 </div>
 
-                <h2 class="text-2xl font-semibold text-slate-800 hidden">Fiche d'engagement</h2>
-
                 <div class="fiche-container p-8">
                     <!-- Header pour impression -->
                     <div class="print-header hidden">
@@ -295,7 +390,7 @@
                     <!-- Signature et date -->
                     <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="text-center">
-                            <p class="text-sm font-medium text-slate-600 mb-8">Signature du parent/tuteur</p>
+                            <p class="text-sm font-medium text-slate-600 mb-8" id="signatureLabel">Signature</p>
                             <div class="border-b-2 border-slate-300 w-32 mx-auto"></div>
                         </div>
                         <div class="text-center">
@@ -330,22 +425,51 @@
     </div>
 
     <script>
+        let currentTab = 'parent';
         const form = document.getElementById('engagementForm');
         const ficheContainer = document.getElementById('fiche-engagement');
         const ficheText = document.getElementById('ficheText');
         const dateGeneration = document.getElementById('dateGeneration');
+        const signatureLabel = document.getElementById('signatureLabel');
+
+        function switchTab(tab) {
+            currentTab = tab;
+            const tabParent = document.getElementById('tabParent');
+            const tabRecruteur = document.getElementById('tabRecruteur');
+            const formParent = document.getElementById('formParent');
+            const formRecruteur = document.getElementById('formRecruteur');
+
+            if (tab === 'parent') {
+                tabParent.classList.add('active');
+                tabRecruteur.classList.remove('active');
+                formParent.classList.remove('hidden');
+                formRecruteur.classList.add('hidden');
+            } else {
+                tabRecruteur.classList.add('active');
+                tabParent.classList.remove('active');
+                formRecruteur.classList.remove('hidden');
+                formParent.classList.add('hidden');
+            }
+
+            ficheContainer.classList.add('hidden');
+            form.reset();
+        }
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            // Validation des champs obligatoires
-            const requiredFields = ['nomParent', 'naissanceParent', 'carteParent', 'expirationParent', 'nomEnfant', 'naissanceEnfant'];
+            let requiredFields = [];
             let isValid = true;
             let firstInvalidField = null;
 
+            if (currentTab === 'parent') {
+                requiredFields = ['nomParent', 'naissanceParent', 'carteParent', 'expirationParent', 'nomEnfant', 'naissanceEnfant'];
+            } else {
+                requiredFields = ['nomRecruteur', 'fonctionRecruteur', 'telephoneRecruteur', 'nomAthlete', 'naissanceAthlete', 'specialite', 'niveau'];
+            }
+
             requiredFields.forEach(fieldId => {
                 const field = document.getElementById(fieldId);
-
                 if (!field.value.trim()) {
                     field.classList.add('border-red-300', 'bg-red-50');
                     field.classList.remove('border-slate-200');
@@ -362,41 +486,90 @@
                 return;
             }
 
-            const nomParent = document.getElementById('nomParent').value.trim();
-            const naissanceParent = new Date(document.getElementById('naissanceParent').value).toLocaleDateString('fr-FR');
-            const carteParent = document.getElementById('carteParent').value.trim();
-            const expirationParent = new Date(document.getElementById('expirationParent').value).toLocaleDateString('fr-FR');
-            const nomEnfant = document.getElementById('nomEnfant').value.trim();
-            const naissanceEnfant = new Date(document.getElementById('naissanceEnfant').value).toLocaleDateString('fr-FR');
             const aujourdhui = new Date().toLocaleDateString('fr-FR');
+            let ficheContent = '';
 
-            const ficheContent = `
-                <p class="text-sm leading-relaxed">
-                    Je soussigné(e), <strong class="uppercase">${nomParent}</strong>, né(e) le <strong>${naissanceParent}</strong>, 
-                    numéro de carte d'identité <strong>${carteParent}</strong> expirant le <strong>${expirationParent}</strong>, 
-                    en ma qualité de parent/tuteur légal de <strong class="uppercase">${nomEnfant}</strong>, 
-                    né(e) le <strong>${naissanceEnfant}</strong>, autorise et m'engage à ce que mon enfant 
-                    participe aux activités de l'Association Sportive des Finances, section Athlétisme U12.
-                </p>
+            if (currentTab === 'parent') {
+                const nomParent = document.getElementById('nomParent').value.trim();
+                const naissanceParent = new Date(document.getElementById('naissanceParent').value).toLocaleDateString('fr-FR');
+                const carteParent = document.getElementById('carteParent').value.trim();
+                const expirationParent = new Date(document.getElementById('expirationParent').value).toLocaleDateString('fr-FR');
+                const nomEnfant = document.getElementById('nomEnfant').value.trim();
+                const naissanceEnfant = new Date(document.getElementById('naissanceEnfant').value).toLocaleDateString('fr-FR');
 
-                <p class="text-sm font-medium text-slate-700 mt-6 mb-4">À ce titre, je m'engage à :</p>
+                ficheContent = `
+                    <p class="text-sm leading-relaxed">
+                        Je soussigné(e), <strong class="uppercase">${nomParent}</strong>, né(e) le <strong>${naissanceParent}</strong>, 
+                        numéro de carte d'identité <strong>${carteParent}</strong> expirant le <strong>${expirationParent}</strong>, 
+                        en ma qualité de parent/tuteur légal de <strong class="uppercase">${nomEnfant}</strong>, 
+                        né(e) le <strong>${naissanceEnfant}</strong>, autorise et m'engage à ce que mon enfant 
+                        participe aux activités de l'Association Sportive des Finances, section Athlétisme U12.
+                    </p>
 
-                <ul class="list-disc list-inside space-y-2 text-sm text-slate-700 ml-4">
-                    <li>assurer la présence régulière et assidue de mon enfant aux entraînements</li>
-                    <li>respecter et faire respecter par mon enfant les textes et règlements de l'association</li>
-                    <li>veiller à ce que mon enfant respecte les consignes des entraîneurs et dirigeants</li>
-                    <li>m'assurer que mon enfant prenne soin de toute dotation en matériel fournie par l'association</li>
-                    <li>soutenir les valeurs d'éthique et de morale promues par l'association</li>
-                    <li>contribuer positivement au développement sportif et personnel de mon enfant au sein de l'association</li>
-                    <li>informer l'association de tout problème de santé ou toute situation particulière concernant mon enfant.</li>
-                </ul>
+                    <p class="text-sm font-medium text-slate-700 mt-6 mb-4">À ce titre, je m'engage à :</p>
 
-                <p class="text-sm leading-relaxed mt-6 font-medium">
-                    Je reconnais avoir pris connaissance des règlements de l'Association Sportive des Finances 
-                    et m'engage à les respecter. Le présent engagement est fait en toute connaissance de cause 
-                    pour le bien-être et l'épanouissement sportif de mon enfant.
-                </p>
-            `;
+                    <ul class="list-disc list-inside space-y-2 text-sm text-slate-700 ml-4">
+                        <li>assurer la présence régulière et assidue de mon enfant aux entraînements</li>
+                        <li>respecter et faire respecter par mon enfant les textes et règlements de l'association</li>
+                        <li>veiller à ce que mon enfant respecte les consignes des entraîneurs et dirigeants</li>
+                        <li>m'assurer que mon enfant prenne soin de toute dotation en matériel fournie par l'association</li>
+                        <li>soutenir les valeurs d'éthique et de morale promues par l'association</li>
+                        <li>contribuer positivement au développement sportif et personnel de mon enfant au sein de l'association</li>
+                        <li>informer l'association de tout problème de santé ou toute situation particulière concernant mon enfant</li>
+                        <li>m'assurer que mon enfant respecte les règles d'éthique et de morale</li>
+                    </ul>
+
+                    <p class="text-sm leading-relaxed mt-6 font-medium">
+                        Je reconnais avoir pris connaissance des règlements de l'Association Sportive des Finances 
+                        et m'engage à les respecter. Le présent engagement est fait en toute connaissance de cause 
+                        pour le bien-être et l'épanouissement sportif de mon enfant.
+                    </p>
+                `;
+                signatureLabel.textContent = 'Signature du parent/tuteur';
+
+            } else {
+                const nomRecruteur = document.getElementById('nomRecruteur').value.trim();
+                const fonctionRecruteur = document.getElementById('fonctionRecruteur').value.trim();
+                const telephoneRecruteur = document.getElementById('telephoneRecruteur').value.trim();
+                const emailRecruteur = document.getElementById('emailRecruteur').value.trim();
+                const nomAthlete = document.getElementById('nomAthlete').value.trim();
+                const naissanceAthlete = new Date(document.getElementById('naissanceAthlete').value).toLocaleDateString('fr-FR');
+                const specialite = document.getElementById('specialite').value.trim();
+                const niveau = document.getElementById('niveau').value;
+
+                ficheContent = `
+                    <p class="text-sm leading-relaxed">
+                        Je soussigné(e), <strong class="uppercase">${nomRecruteur}</strong>, 
+                        ${fonctionRecruteur} de l'Association Sportive des Finances, section Athlétisme U12, 
+                        joignable au <strong>${telephoneRecruteur}</strong>${emailRecruteur ? ` et à l'adresse <strong>${emailRecruteur}</strong>` : ''}, 
+                        certifie par la présente avoir recruté <strong class="uppercase">${nomAthlete}</strong>, 
+                        né(e) le <strong>${naissanceAthlete}</strong>, spécialiste en <strong>${specialite}</strong>, 
+                        niveau <strong>${niveau}</strong>, au sein de notre association.
+                    </p>
+
+                    <p class="text-sm font-medium text-slate-700 mt-6 mb-4">En tant que recruteur, je m'engage à :</p>
+
+                    <ul class="list-disc list-inside space-y-2 text-sm text-slate-700 ml-4">
+                        <li>assurer un suivi régulier et personnalisé de l'athlète recruté</li>
+                        <li>veiller au respect des règlements et textes de l'association par l'athlète</li>
+                        <li>garantir un encadrement technique de qualité adapté au niveau de l'athlète</li>
+                        <li>promouvoir les valeurs d'éthique, de discipline et de fair-play</li>
+                        <li>faciliter l'intégration de l'athlète au sein de l'équipe et de l'association</li>
+                        <li>accompagner le développement sportif et personnel de l'athlète</li>
+                        <li>communiquer régulièrement avec les parents/tuteurs concernant l'évolution de l'athlète</li>
+                        <li>signaler toute difficulté ou situation particulière à la direction de l'association</li>
+                        <li>respecter le calendrier d'entraînement et de compétition établi</li>
+                        <li>contribuer activement à l'atteinte des objectifs sportifs de l'association</li>
+                    </ul>
+
+                    <p class="text-sm leading-relaxed mt-6 font-medium">
+                        Je reconnais avoir pris connaissance des règlements de l'Association Sportive des Finances 
+                        et m'engage à les respecter. Le présent engagement de recrutement est fait en toute connaissance 
+                        de cause pour le développement sportif de l'athlète et de l'association.
+                    </p>
+                `;
+                signatureLabel.textContent = 'Signature du recruteur';
+            }
 
             ficheText.innerHTML = ficheContent;
             dateGeneration.textContent = aujourdhui;
@@ -408,33 +581,34 @@
             form.reset();
             ficheContainer.classList.add('hidden');
 
-            // Reset field styles
             document.querySelectorAll('.form-input').forEach(input => {
                 input.classList.remove('border-red-300', 'bg-red-50');
                 input.classList.add('border-slate-200');
             });
 
-            document.getElementById('nomParent').focus();
+            if (currentTab === 'parent') {
+                document.getElementById('nomParent').focus();
+            } else {
+                document.getElementById('nomRecruteur').focus();
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Auto-focus et amélioration UX
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('nomParent').focus();
         });
 
         // Formatage automatique des noms
-        document.getElementById('nomParent').addEventListener('input', function (e) {
-            const value = this.value;
-            this.value = value.replace(/\b\w/g, l => l.toUpperCase());
+        ['nomParent', 'nomEnfant', 'nomRecruteur', 'nomAthlete'].forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', function (e) {
+                    const value = this.value;
+                    this.value = value.replace(/\b\w/g, l => l.toUpperCase());
+                });
+            }
         });
 
-        document.getElementById('nomEnfant').addEventListener('input', function (e) {
-            const value = this.value;
-            this.value = value.replace(/\b\w/g, l => l.toUpperCase());
-        });
-
-        // Affichage du header lors de l'impression
         window.addEventListener('beforeprint', function () {
             document.querySelector('.print-header').classList.remove('hidden');
         });
