@@ -700,7 +700,7 @@
                 
                 // Création de la liste des athlètes pour la fiche
                 let athletesListHTML = athletesData.map((athlete) => {
-                    return `<li class="text-sm text-slate-700"><strong>${athlete.nom}</strong> (Né le : ${athlete.naissance})</li>`;
+                    return `<li class="text-sm text-slate-700 uppercase"><strong>${athlete.nom}</strong> (Né le : ${athlete.naissance})</li>`;
                 }).join('');
 
                 ficheContent = `
