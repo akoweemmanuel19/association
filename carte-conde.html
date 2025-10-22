@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condoléances - AS FINANCES</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Styles spécifiques à l'impression */
+        @media print {
+            body * {
+                visibility: hidden;
+                /* Cache tout */
+            }
+
+            #cardToPrint,
+            #cardToPrint * {
+                visibility: visible;
+                /* Montre uniquement la carte */
+            }
+
+            #cardToPrint {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none !important;
+                border: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-b from-gray-100 to-gray-200 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl">
+        <!-- Carte principale -->
+        <div id="cardToPrint" class="bg-white rounded-lg shadow-2xl overflow-hidden">
+            <!-- En-tête avec fond noir et or -->
+            <div class="bg-gradient-to-r from-gray-900 to-gray-800 px-8 py-12 text-center border-b-4 border-yellow-500">
+                <!-- Logo (cercle avec initiales) -->
+                <div class="logo-circle w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <img src="logo.PNG" alt="Logo AS FINANCES" class="w-20 h-20 rounded-full object-cover">
+                </div>
+
+                <h1 class="text-white text-2xl font-bold">
+                    Association Sportive des Finances
+                </h1>
+                <p class="text-yellow-300 mt-2 text-sm">Bureau Exécutif</p>
+            </div>
+
+            <!-- Contenu principal -->
+            <div class="px-8 py-12">
+                <!-- Titre de condoléances -->
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                        Sincères Condoléances
+                    </h2>
+                    <div class="w-16 h-1 bg-yellow-500 mx-auto"></div>
+                </div>
+
+                <!-- Message de condoléances -->
+                <div class="bg-gray-50 rounded-lg p-8 mb-8 border-l-4 border-yellow-500">
+                    <p class="text-gray-700 text-center text-lg leading-relaxed italic">
+                        Le Bureau Exécutif de l'Association Sportive des Finances
+                        <strong>(AS FINANCES)</strong> vous présente ses sincères condoléances.
+                    </p>
+                    <p class="text-gray-700 text-center mt-4 text-lg font-semibold">
+                        Que l'âme de l'illustre disparue repose en paix.
+                    </p>
+                </div>
+
+                <!-- Informations de contact -->
+                <div class="border-t-2 border-gray-200 pt-6">
+                    <div class="flex items-center justify-between flex-wrap gap-4">
+                        <div>
+                            <p class="text-gray-600 text-sm">Le Président</p>
+                            <p class="text-gray-900 font-bold text-lg">Noël C. AHOUDJO</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-600 text-sm">Téléphone</p>
+                            <p class="text-gray-900 font-bold text-lg">01 97 09 36 30</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pied de page -->
+                <!-- <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+                    <p class="text-gray-500 text-xs">
+                        Association Sportive des Finances
+                    </p>
+                    <p class="text-gray-400 text-xs mt-1">
+                        © 2025 - Tous droits réservés
+                    </p>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="mt-8 flex justify-center gap-4 no-print">
+            <button onclick="printCard()"
+                class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition-colors">
+                🖨️ Imprimer
+            </button>
+            <button onclick="downloadCard()"
+                class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition-colors">
+                📥 Télécharger
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function downloadCard() {
+            alert('Conseil: Utilisez "Imprimer" puis choisissez "Enregistrer en PDF" pour une meilleure qualité.');
+        }
+
+        function printCard() {
+            window.print();
+        }
+    </script>
+</body>
+
+</html>
